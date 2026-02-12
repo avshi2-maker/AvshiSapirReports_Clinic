@@ -2,7 +2,9 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>יומן פרויקטים מתקדם - ניהול משאבים ועלויות</title>
     <style>
         * {
@@ -15,7 +17,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
+            padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
 
         .container {
@@ -32,6 +36,7 @@
             color: #667eea;
             margin-bottom: 10px;
             font-size: 2.5em;
+            word-break: break-word;
         }
 
         .subtitle {
@@ -58,6 +63,7 @@
             font-size: 16px;
             transition: all 0.3s;
             position: relative;
+            min-height: 44px;
         }
 
         .tab:hover {
@@ -89,6 +95,7 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
+            min-height: 44px;
         }
 
         .add-project-btn:hover {
@@ -109,6 +116,7 @@
             border-radius: 12px;
             margin-bottom: 25px;
             border: 2px solid #e0e0e0;
+            overflow: hidden;
         }
 
         .section-title {
@@ -118,6 +126,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
+            word-break: break-word;
         }
 
         .resource-management {
@@ -142,6 +152,8 @@
             background: #f5f5f5;
             border-radius: 6px;
             margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .resource-item input {
@@ -153,18 +165,21 @@
         }
 
         .resource-item button {
-            padding: 5px 10px;
+            padding: 8px 12px;
             background: #ff4444;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            min-height: 44px;
+            min-width: 44px;
         }
 
         .add-resource-form {
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         .add-resource-form input {
@@ -172,6 +187,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
+            min-width: 120px;
         }
 
         .add-resource-form button {
@@ -182,6 +198,8 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            min-height: 44px;
+            white-space: nowrap;
         }
 
         .input-group {
@@ -208,6 +226,8 @@
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s;
+            width: 100%;
+            max-width: 100%;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -220,6 +240,14 @@
             min-height: 80px;
         }
 
+        /* === Buttons area === */
+        .buttons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
         .btn {
             padding: 14px 28px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -230,6 +258,7 @@
             font-size: 16px;
             font-weight: bold;
             transition: transform 0.2s;
+            min-height: 44px;
         }
 
         .btn:hover {
@@ -237,24 +266,36 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
+        .btn:active {
+            transform: translateY(0);
+        }
+
         .email-btn {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            margin-right: 10px;
+        }
+
+        /* === Tables — scrollable wrapper === */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
             background: white;
             border-radius: 8px;
             overflow: hidden;
+            min-width: 700px;
         }
 
         th, td {
             padding: 15px;
             text-align: right;
             border-bottom: 1px solid #e0e0e0;
+            white-space: nowrap;
         }
 
         th {
@@ -274,6 +315,8 @@
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
+            min-height: 44px;
+            white-space: nowrap;
         }
 
         .delete-btn:hover {
@@ -282,14 +325,14 @@
 
         .summary {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
 
         .summary-card {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             border: 2px solid #e0e0e0;
             text-align: center;
@@ -298,12 +341,15 @@
         .summary-card h3 {
             color: #667eea;
             margin-bottom: 15px;
+            font-size: 1em;
+            word-break: break-word;
         }
 
         .summary-value {
             font-size: 2em;
             font-weight: bold;
             color: #333;
+            word-break: break-all;
         }
 
         .summary-label {
@@ -317,16 +363,18 @@
             padding: 30px;
             border-radius: 12px;
             margin-top: 30px;
+            overflow: hidden;
         }
 
         .financial-summary h2 {
             text-align: center;
             margin-bottom: 25px;
+            word-break: break-word;
         }
 
         .financial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 20px;
         }
 
@@ -345,6 +393,7 @@
         .financial-item .value {
             font-size: 1.8em;
             font-weight: bold;
+            word-break: break-all;
         }
 
         .net-profit {
@@ -360,12 +409,15 @@
         }
 
         .resource-tag {
-            padding: 5px 10px;
+            padding: 8px 14px;
             background: #667eea;
             color: white;
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .resource-tag:hover {
@@ -376,6 +428,82 @@
             background: #4CAF50;
         }
 
+        /* === Auto-save bar === */
+        .autosave-bar {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* === Inline grid panels (recommendation, payment, etc.) === */
+        .inline-grid-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .inline-grid-cell {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .inline-result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* === Payment form inside financial-summary === */
+        .payment-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-form input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+        }
+
+        .payment-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .payment-full-width {
+            grid-column: 1 / -1;
+        }
+
+        .payment-add-btn {
+            padding: 12px 20px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 16px;
+            min-height: 44px;
+        }
+
+        /* === Print === */
         @media print {
             body {
                 background: white;
@@ -384,8 +512,252 @@
             .container {
                 box-shadow: none;
             }
-            .btn, .delete-btn, .tabs, .add-resource-form {
+            .btn, .delete-btn, .tabs, .add-resource-form, .buttons-row, .autosave-bar {
                 display: none;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE — TABLET (max-width: 768px)
+           ======================================== */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .subtitle {
+                font-size: 0.95em;
+                margin-bottom: 20px;
+            }
+
+            .tabs {
+                gap: 6px;
+                margin-bottom: 20px;
+            }
+
+            .tab {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+
+            .add-project-btn {
+                padding: 10px 14px;
+                font-size: 14px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .section {
+                padding: 14px;
+                margin-bottom: 16px;
+            }
+
+            .section-title {
+                font-size: 1.15em;
+            }
+
+            .resource-management {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-list {
+                padding: 12px;
+            }
+
+            .resource-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .resource-item input {
+                width: 100%;
+            }
+
+            .add-resource-form {
+                flex-direction: column;
+            }
+
+            .add-resource-form input {
+                min-width: 100%;
+            }
+
+            .add-resource-form button {
+                width: 100%;
+            }
+
+            .input-group {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            /* Buttons stack on mobile */
+            .buttons-row .btn,
+            .btn {
+                width: 100%;
+                text-align: center;
+                padding: 12px 16px;
+                font-size: 15px;
+                margin-bottom: 0;
+            }
+
+            /* Tables scroll horizontally */
+            .table-wrapper {
+                margin-left: -14px;
+                margin-right: -14px;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .summary-card {
+                padding: 14px;
+            }
+
+            .summary-card h3 {
+                font-size: 0.85em;
+            }
+
+            .summary-value {
+                font-size: 1.5em;
+            }
+
+            .financial-summary {
+                padding: 18px;
+                margin-top: 20px;
+            }
+
+            .financial-summary h2 {
+                font-size: 1.2em;
+                margin-bottom: 18px;
+            }
+
+            .financial-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .financial-item {
+                padding: 10px;
+            }
+
+            .financial-item .value {
+                font-size: 1.3em;
+            }
+
+            .net-profit {
+                font-size: 1.5em !important;
+            }
+
+            .inline-grid-panel {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .inline-result-box {
+                padding: 14px;
+            }
+
+            .inline-result-box [style*="font-size: 2.5em"] {
+                font-size: 1.6em !important;
+            }
+
+            .payment-form {
+                grid-template-columns: 1fr;
+            }
+
+            .autosave-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE — PHONE (max-width: 480px)
+           ======================================== */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 4px;
+            }
+
+            .container {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            h1 {
+                font-size: 1.3em;
+            }
+
+            .subtitle {
+                font-size: 0.85em;
+            }
+
+            .tab {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .section {
+                padding: 10px;
+            }
+
+            .section-title {
+                font-size: 1em;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .summary-value {
+                font-size: 1.3em;
+            }
+
+            .financial-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .financial-item .value {
+                font-size: 1.1em;
+            }
+
+            .net-profit {
+                font-size: 1.3em !important;
+            }
+
+            .inline-grid-panel {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+                font-size: 12px;
             }
         }
     </style>
@@ -462,45 +834,49 @@
                     <textarea id="notes-0" placeholder="הערות נוספות על הרשומה..."></textarea>
                 </div>
 
-                <button class="btn" onclick="addEntry(0)">➕ הוסף רשומה</button>
-                <button class="btn email-btn" onclick="sendEmail(0)">📧 שלח במייל</button>
-                <button class="btn" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" onclick="printProject(0)">🖨️ הדפסה</button>
-                <button class="btn" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);" onclick="createShareableLink(0)">🔗 צור קישור</button>
-                <button class="btn" style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);" onclick="shareToWhatsApp(0)">📱 שתף בווטסאפ</button>
-                <button class="btn" style="background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);" onclick="manualSave(0)">💾 שמירה ידנית</button>
-                <button class="btn" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);" onclick="exportForNotebookLM(0)">📓 ייצוא ל‑NotebookLM</button>
+                <div class="buttons-row">
+                    <button class="btn" onclick="addEntry(0)">➕ הוסף רשומה</button>
+                    <button class="btn email-btn" onclick="sendEmail(0)">📧 שלח במייל</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" onclick="printProject(0)">🖨️ הדפסה</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);" onclick="createShareableLink(0)">🔗 צור קישור</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);" onclick="shareToWhatsApp(0)">📱 שתף בווטסאפ</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);" onclick="manualSave(0)">💾 שמירה ידנית</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);" onclick="exportForNotebookLM(0)">📓 ייצוא ל‑NotebookLM (.md)</button>
+                </div>
                 
-                <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px; background: #f0f0f0; padding: 12px; border-radius: 8px;">
+                <div class="autosave-bar">
                     <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 0;">
                         <input type="checkbox" id="autoSaveToggle-0" onchange="toggleAutoSave(0)" style="width: 20px; height: 20px; cursor: pointer;">
                         <span style="font-weight: 600;">🔄 שמירה אוטומטית (כל 60 שניות)</span>
                     </label>
-                    <span id="autoSaveStatus-0" style="margin-right: auto; color: #666; font-size: 0.9em;"></span>
+                    <span id="autoSaveStatus-0" style="color: #666; font-size: 0.9em;"></span>
                 </div>
             </div>
 
             <!-- Data Table -->
             <div class="section">
                 <h2 class="section-title">📋 טבלת נתונים</h2>
-                <table id="dataTable-0">
-                    <thead>
-                        <tr>
-                            <th>תאריך התחלה</th>
-                            <th>תאריך סיום</th>
-                            <th>ימי עבודה</th>
-                            <th>סה"כ שעות</th>
-                            <th>נושא כללי</th>
-                            <th>מרכיב שנבנה</th>
-                            <th>משאבים ששימשו</th>
-                            <th>הערות</th>
-                            <th>עלות משאבים (₪)</th>
-                            <th>חיוב שעתי (₪)</th>
-                            <th>חיוב נטו (₪)</th>
-                            <th>פעולות</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table id="dataTable-0">
+                        <thead>
+                            <tr>
+                                <th>תאריך התחלה</th>
+                                <th>תאריך סיום</th>
+                                <th>ימי עבודה</th>
+                                <th>סה"כ שעות</th>
+                                <th>נושא כללי</th>
+                                <th>מרכיב שנבנה</th>
+                                <th>משאבים ששימשו</th>
+                                <th>הערות</th>
+                                <th>עלות משאבים (₪)</th>
+                                <th>חיוב שעתי (₪)</th>
+                                <th>חיוב נטו (₪)</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Summary -->
@@ -600,7 +976,7 @@
                     </div>
                 </div>
 
-                <div class="financial-grid" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div class="financial-grid" style="margin-top: 20px;">
                     <div class="summary-card">
                         <h3>💼 סה"כ השקעות קודמות</h3>
                         <div class="summary-value" id="previousInvestments-0">0</div>
@@ -704,25 +1080,25 @@
 
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 12px; color: white;">
                     <h3 style="text-align: center; margin-bottom: 20px;">💡 המלצת מערכת</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                    <div class="inline-grid-panel">
+                        <div class="inline-grid-cell">
                             <div style="font-size: 0.9em; margin-bottom: 10px;">טוקנים מומלצים לחודש</div>
-                            <div style="font-size: 2em; font-weight: bold;" id="recommendedMonthlyTokens-0">0</div>
+                            <div style="font-size: 1.8em; font-weight: bold;" id="recommendedMonthlyTokens-0">0</div>
                         </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                        <div class="inline-grid-cell">
                             <div style="font-size: 0.9em; margin-bottom: 10px;">טיפולים מומלצים לחודש</div>
-                            <div style="font-size: 2em; font-weight: bold;" id="recommendedTreatments-0">0</div>
+                            <div style="font-size: 1.8em; font-weight: bold;" id="recommendedTreatments-0">0</div>
                         </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                        <div class="inline-grid-cell">
                             <div style="font-size: 0.9em; margin-bottom: 10px;">רווח נטו ממנוי (₪)</div>
-                            <div style="font-size: 2em; font-weight: bold;" id="profitPerSubscriber-0">0</div>
+                            <div style="font-size: 1.8em; font-weight: bold;" id="profitPerSubscriber-0">0</div>
                         </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                        <div class="inline-grid-cell">
                             <div style="font-size: 0.9em; margin-bottom: 10px;">אחוז רווח ממנוי</div>
-                            <div style="font-size: 2em; font-weight: bold;" id="profitMargin-0">0%</div>
+                            <div style="font-size: 1.8em; font-weight: bold;" id="profitMargin-0">0%</div>
                         </div>
                     </div>
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.2); border-radius: 8px; text-align: center;">
+                    <div class="inline-result-box">
                         <div id="aiRecommendation-0" style="font-size: 1.1em; line-height: 1.6;">
                             הזן נתונים לקבלת המלצה אוטומטית
                         </div>
@@ -771,9 +1147,9 @@
                             <div class="value net-profit" id="roiNetProfit-0">0 ₪</div>
                         </div>
                     </div>
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 10px; text-align: center;">
+                    <div class="inline-result-box">
                         <div style="font-size: 1.2em; margin-bottom: 10px;">⏱️ צפי החזר השקעה ראשונית</div>
-                        <div style="font-size: 2.5em; font-weight: bold;" id="roiPaybackMonths-0">- חודשים</div>
+                        <div style="font-size: 2em; font-weight: bold;" id="roiPaybackMonths-0">- חודשים</div>
                     </div>
                 </div>
             </div>
@@ -880,13 +1256,13 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 10px;">
-                    <h3 style="text-align: center; margin-bottom: 15px;">🎯 המלצה למינימום מנויים</h3>
-                    <div style="text-align: center; font-size: 1.2em; margin-bottom: 10px;">
+                <div class="inline-result-box" style="background: rgba(255,255,255,0.2);">
+                    <h3 style="margin-bottom: 15px;">🎯 המלצה למינימום מנויים</h3>
+                    <div style="font-size: 1.2em; margin-bottom: 10px;">
                         <strong>מינימום מנויים ליצירת רווח חודשי:</strong>
                     </div>
-                    <div style="text-align: center; font-size: 2.5em; font-weight: bold;" id="minSubscribersRecommendation-0">0</div>
-                    <div style="text-align: center; margin-top: 10px; font-size: 0.9em; opacity: 0.9;">
+                    <div style="font-size: 2em; font-weight: bold;" id="minSubscribersRecommendation-0">0</div>
+                    <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.9;">
                         * חישוב מבוסס על עלויות תחזוקה חודשיות מול מחיר מנוי
                     </div>
                 </div>
@@ -917,35 +1293,35 @@
                 <!-- Payment Tracking -->
                 <div class="payment-section" style="margin-top: 30px;">
                     <h3 style="text-align: center; margin-bottom: 20px;">💳 מעקב תשלומים</h3>
-                    <div class="payment-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div class="payment-form">
                         <div>
-                            <label style="display: block; margin-bottom: 5px;">תאריך חיוב:</label>
-                            <input type="date" id="invoiceDate-0" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                            <label>תאריך חיוב:</label>
+                            <input type="date" id="invoiceDate-0">
                         </div>
                         <div>
-                            <label style="display: block; margin-bottom: 5px;">סכום חיוב (₪):</label>
-                            <input type="number" id="invoiceAmount-0" step="0.01" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                            <label>סכום חיוב (₪):</label>
+                            <input type="number" id="invoiceAmount-0" step="0.01">
                         </div>
                         <div>
-                            <label style="display: block; margin-bottom: 5px;">תאריך תשלום:</label>
-                            <input type="date" id="paymentDate-0" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                            <label>תאריך תשלום:</label>
+                            <input type="date" id="paymentDate-0">
                         </div>
                         <div>
-                            <label style="display: block; margin-bottom: 5px;">סכום התקבל (₪):</label>
-                            <input type="number" id="paymentAmount-0" step="0.01" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                            <label>סכום התקבל (₪):</label>
+                            <input type="number" id="paymentAmount-0" step="0.01">
                         </div>
-                        <div style="grid-column: 1 / -1;">
-                            <label style="display: block; margin-bottom: 5px;">הערות תשלום:</label>
-                            <input type="text" id="paymentNotes-0" placeholder="הערות על החיוב/תשלום" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                        <div class="payment-full-width">
+                            <label>הערות תשלום:</label>
+                            <input type="text" id="paymentNotes-0" placeholder="הערות על החיוב/תשלום">
                         </div>
                     </div>
-                    <button onclick="addPaymentRecord(0)" style="padding: 10px 20px; background: white; color: #667eea; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%;">➕ הוסף רשומת תשלום</button>
+                    <button class="payment-add-btn" onclick="addPaymentRecord(0)">➕ הוסף רשומת תשלום</button>
                     
                     <div id="paymentRecords-0" style="margin-top: 20px;"></div>
                     
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 10px; text-align: center;">
+                    <div class="inline-result-box">
                         <div style="font-size: 1.2em; margin-bottom: 10px;">💰 יתרה לתשלום</div>
-                        <div style="font-size: 2.5em; font-weight: bold;" id="balanceDue-0">0 ₪</div>
+                        <div style="font-size: 2em; font-weight: bold;" id="balanceDue-0">0 ₪</div>
                     </div>
                 </div>
             </div>
@@ -954,18 +1330,20 @@
         <!-- Report History Section -->
         <div class="section" style="margin-top: 30px;">
             <h2 class="section-title">📁 היסטוריית דוחות שנשמרו</h2>
-            <table id="reportHistoryTable">
-                <thead>
-                    <tr>
-                        <th>שם קובץ</th>
-                        <th>תאריך ושעה</th>
-                        <th>פעולות</th>
-                    </tr>
-                </thead>
-                <tbody id="reportHistoryBody"></tbody>
-            </table>
-            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);" onclick="loadReportFromFile()">📂 טען דוח מקובץ JSON</button>
+            <div class="table-wrapper">
+                <table id="reportHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>שם קובץ</th>
+                            <th>תאריך ושעה</th>
+                            <th>פעולות</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportHistoryBody"></tbody>
+                </table>
+            </div>
+            <div style="margin-top: 15px;">
+                <button class="btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); width: 100%;" onclick="loadReportFromFile()">📂 טען דוח מקובץ JSON</button>
             </div>
         </div>
     </div>
@@ -1908,15 +2286,9 @@
             updateMaintenanceCosts(projectId);
         }
 
-        // === Export for NotebookLM ===
+        // === Export for NotebookLM (Markdown format) ===
         function exportForNotebookLM(projectId) {
             const projectName = projects[projectId].name || 'project';
-            const tableEl = document.querySelector(`#dataTable-${projectId}`);
-            const summaryEl = document.getElementById(`summary-${projectId}`);
-
-            let tableHTML = tableEl ? tableEl.outerHTML : '<p>אין נתוני טבלה</p>';
-            let summaryHTML = summaryEl ? summaryEl.outerHTML : '<p>אין נתוני סיכום</p>';
-
             const now = new Date();
             const timestamp = now.getFullYear() + '' +
                 String(now.getMonth() + 1).padStart(2, '0') +
@@ -1924,26 +2296,95 @@
                 String(now.getHours()).padStart(2, '0') +
                 String(now.getMinutes()).padStart(2, '0');
 
-            const htmlContent = `<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<title>NotebookLM Export - ${projectName}</title>
-</head>
-<body>
-<h1>יומן פרויקט: ${projectName}</h1>
-<h2>טבלת נתונים</h2>
-${tableHTML}
-<h2>סיכום</h2>
-${summaryHTML}
-<p><small>יוצא בתאריך: ${now.toLocaleString('he-IL')}</small></p>
-</body>
-</html>`;
+            // --- Build Markdown content ---
+            let md = `# יומן פרויקט: ${projectName}\n`;
+            md += `> יוצא בתאריך: ${now.toLocaleString('he-IL')}\n\n`;
 
+            // --- Data Table ---
+            md += `## 📋 טבלת נתונים\n\n`;
+            const entries = projects[projectId].entries || [];
+            if (entries.length === 0) {
+                md += `אין רשומות עדיין.\n\n`;
+            } else {
+                md += `| תאריך התחלה | תאריך סיום | ימי עבודה | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | חיוב שעתי | חיוב נטו |\n`;
+                md += `|---|---|---|---|---|---|---|---|---|---|---|\n`;
+                entries.forEach(e => {
+                    md += `| ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(2)} | ${e.hourlyRate.toFixed(2)} | ${e.netCharge.toFixed(2)} |\n`;
+                });
+                md += `\n`;
+            }
+
+            // --- Summary cards ---
+            md += `## 📊 סיכום כללי\n\n`;
+            const getVal = (id) => document.getElementById(`${id}-${projectId}`)?.textContent || '0';
+            md += `- **סה"כ ימי עבודה:** ${getVal('totalDays')} ימים\n`;
+            md += `- **סה"כ שעות עבודה:** ${getVal('totalHours')} שעות\n`;
+            md += `- **סה"כ עלות משאבים:** ${getVal('totalResourceCost')} ₪\n`;
+            md += `- **סה"כ הכנסה גולמית:** ${getVal('totalIncome')} ₪\n\n`;
+
+            // --- Token costs ---
+            md += `## 🤖 עלויות טוקנים\n\n`;
+            md += `- **עלות טוקנים לטיפול:** ${getVal('costPerTreatment')} ₪\n`;
+            md += `- **עלות טוקנים לחיפוש:** ${getVal('costPerSearch')} ₪\n`;
+            md += `- **סה"כ טוקנים יומיים:** ${getVal('dailyTotalTokens')}\n`;
+            md += `- **עלות יומית כוללת:** ${getVal('dailyTokenCost')} ₪\n`;
+            md += `- **עלות חודשית טוקנים:** ${getVal('monthlyTokenCost')} ₪\n\n`;
+
+            // --- Maintenance costs ---
+            md += `## 🔧 עלויות תחזוקה חודשיות\n\n`;
+            const getInput = (id) => document.getElementById(`${id}-${projectId}`)?.value || '0';
+            md += `- **אחסון האתר:** ${getInput('hostingCost')} ₪\n`;
+            md += `- **עלות טוקנים:** ${getInput('tokenCost')} ₪\n`;
+            md += `- **שעות תחזוקה:** ${getInput('maintenanceHours')} שעות × ${getInput('programmerRate')} ₪/שעה\n`;
+            md += `- **עמלות גבייה:** ${getInput('paymentFees')} ₪\n`;
+            md += `- **הוצאות שונות:** ${getInput('otherFixedCosts')} ₪\n`;
+
+            // Software list
+            if (projects[projectId].softwareList && projects[projectId].softwareList.length > 0) {
+                md += `- **תוכנות:**\n`;
+                projects[projectId].softwareList.forEach(s => {
+                    md += `  - ${s.name}: ${s.cost} ₪/חודש\n`;
+                });
+            }
+            // Misc costs
+            if (projects[projectId].miscCosts && projects[projectId].miscCosts.length > 0) {
+                md += `- **עלויות נוספות:**\n`;
+                projects[projectId].miscCosts.forEach(c => {
+                    md += `  - ${c.name}: ${c.amount} ₪\n`;
+                });
+            }
+            md += `- **סה"כ עלויות תחזוקה:** ${getVal('totalMonthlyCosts')} ₪/חודש\n\n`;
+
+            // --- Revenue ---
+            md += `## 📈 הכנסות ורווחיות\n\n`;
+            md += `- **הכנסה חודשית צפויה:** ${getVal('totalMonthlyRevenue')} ₪\n`;
+            md += `- **הכנסות חודשיות:** ${getVal('finalMonthlyRevenue')}\n`;
+            md += `- **הוצאות תחזוקה:** ${getVal('finalMonthlyCosts')}\n`;
+            md += `- **רווח/הפסד חודשי:** ${getVal('monthlyProfitLoss')}\n`;
+            md += `- **זמן החזר השקעה:** ${getVal('roiMonths')}\n`;
+            md += `- **מינימום מנויים לרווח:** ${getVal('minSubscribersRecommendation')}\n\n`;
+
+            // --- Investment summary ---
+            md += `## 💼 סיכום השקעה\n\n`;
+            md += `- **השקעות קודמות:** ${getVal('previousInvestments')} ₪\n`;
+            md += `- **תחזית השקעה חדשה:** ${getVal('newInvestmentForecast')} ₪\n`;
+            md += `- **סה"כ השקעה כוללת:** ${getVal('totalProjectInvestment')} ₪\n\n`;
+
+            // --- Financial summary ---
+            md += `## 💰 סיכום פיננסי\n\n`;
+            md += `- **הכנסה ברוטו:** ${getVal('grossIncome')}\n`;
+            md += `- **עלויות משאבים:** ${getVal('resourceCosts')}\n`;
+            md += `- **הכנסה נטו:** ${getVal('netProfit')}\n`;
+            md += `- **שכר שעתי ממוצע נטו:** ${getVal('avgHourlyRate')}\n`;
+            md += `- **יתרה לתשלום:** ${getVal('balanceDue')}\n\n`;
+
+            md += `---\n*נוצר אוטומטית מיומן פרויקטים מתקדם*\n`;
+
+            // --- Download as .md ---
             const safeName = projectName.replace(/\s+/g, '_');
-            const fileName = `NotebookLM_${safeName}_${timestamp}.html`;
+            const fileName = `NotebookLM_${safeName}_${timestamp}.md`;
 
-            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -1951,7 +2392,12 @@ ${summaryHTML}
             a.click();
             URL.revokeObjectURL(url);
 
-            alert(`קובץ NotebookLM נוצר: ${fileName}\nניתן לייבא אותו ישירות ל-NotebookLM.`);
+            // --- Also copy to clipboard ---
+            navigator.clipboard.writeText(md).then(() => {
+                alert(`✅ קובץ Markdown נוצר: ${fileName}\n\n📋 הטקסט גם הועתק ללוח!\n\nאפשרויות העלאה ל-NotebookLM:\n1. העלה את קובץ ה-.md ישירות\n2. או: ב-NotebookLM לחץ "Copied text" והדבק`);
+            }).catch(() => {
+                alert(`✅ קובץ Markdown נוצר: ${fileName}\n\nהעלה את הקובץ ל-NotebookLM כ-source.`);
+            });
         }
 
         // === Report History Functions ===
