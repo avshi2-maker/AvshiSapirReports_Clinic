@@ -760,6 +760,172 @@
                 font-size: 12px;
             }
         }
+
+        /* === Calculation Preview Box === */
+        .calc-preview {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 3px solid #4CAF50;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .calc-preview.visible { display: block; }
+        .calc-preview h3 { color: #2e7d32; margin-bottom: 15px; text-align: center; font-size: 1.3em; }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .calc-cell {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #a5d6a7;
+        }
+        .calc-cell .calc-label { font-size: 0.85em; color: #555; margin-bottom: 6px; }
+        .calc-cell .calc-value { font-size: 1.5em; font-weight: 800; color: #2e7d32; }
+        .calc-total-row {
+            background: #2e7d32;
+            color: white;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: 800;
+        }
+        .calc-btn {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            min-height: 44px;
+            transition: transform 0.2s;
+        }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        /* === Grand Total Box === */
+        .grand-total-box {
+            background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 30px;
+            border: 3px solid gold;
+        }
+        .grand-total-box h2 { text-align: center; margin-bottom: 20px; font-size: 1.6em; }
+        .grand-total-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .grand-total-cell {
+            background: rgba(255,255,255,0.12);
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .grand-total-cell .gt-label { font-size: 0.9em; margin-bottom: 8px; opacity: 0.9; }
+        .grand-total-cell .gt-value { font-size: 2em; font-weight: 800; }
+        .grand-total-final {
+            background: gold;
+            color: #1a237e;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 900;
+        }
+        .record-num { 
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        /* Discount row */
+        .discount-row {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .discount-row label { font-weight: 700; color: #e65100; margin: 0; white-space: nowrap; }
+        .discount-input {
+            width: 80px !important;
+            padding: 8px 10px !important;
+            border: 2px solid #ff9800 !important;
+            border-radius: 8px !important;
+            font-size: 1.1em !important;
+            font-weight: 700;
+            text-align: center;
+            background: white;
+        }
+        .discount-result {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .discount-chip {
+            background: white;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 8px 14px;
+            text-align: center;
+        }
+        .discount-chip .dc-label { font-size: 0.8em; color: #e65100; }
+        .discount-chip .dc-value { font-size: 1.2em; font-weight: 800; color: #bf360c; }
+        .discount-chip.after-discount { border-color: #4CAF50; }
+        .discount-chip.after-discount .dc-label { color: #2e7d32; }
+        .discount-chip.after-discount .dc-value { color: #2e7d32; }
+        /* Resource detail box */
+        .resource-detail-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #1976d2;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 12px 0;
+        }
+        .resource-detail-box h4 { color: #0d47a1; margin-bottom: 10px; }
+        .resource-detail-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .resource-detail-line .rd-name { color: #1565c0; }
+        .resource-detail-line .rd-calc { color: #555; font-size: 0.9em; }
+        .resource-detail-line .rd-total { color: #0d47a1; font-weight: 800; }
+        .resource-detail-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: #1565c0;
+            color: white;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
@@ -822,6 +988,11 @@
                         <label>חיוב שעתי (₪):</label>
                         <input type="number" id="hourlyRate-0" value="0" min="0" step="1">
                     </div>
+                    <div class="input-field">
+                        <label>🎓 הנחת מתלמד (%):</label>
+                        <input type="number" id="discountEntry-0" value="35" min="0" max="100" step="1">
+                        <small style="color: #e65100;">מומלץ: 35% למפתח חדש עם כלי AI</small>
+                    </div>
                 </div>
                 
                 <div class="input-field">
@@ -834,7 +1005,60 @@
                     <textarea id="notes-0" placeholder="הערות נוספות על הרשומה..."></textarea>
                 </div>
 
+                <!-- Calculation Preview -->
+                <div class="calc-preview" id="calcPreview-0">
+                    <h3>🔢 תצוגה מקדימה של חישוב</h3>
+                    <div class="calc-grid">
+                        <div class="calc-cell">
+                            <div class="calc-label">📅 ימי עבודה</div>
+                            <div class="calc-value" id="prevDays-0">0</div>
+                        </div>
+                        <div class="calc-cell">
+                            <div class="calc-label">⏰ סה"כ שעות</div>
+                            <div class="calc-value" id="prevHours-0">0</div>
+                        </div>
+                        <div class="calc-cell">
+                            <div class="calc-label">💵 חיוב שעתי</div>
+                            <div class="calc-value" id="prevRate-0">0 ₪</div>
+                        </div>
+                        <div class="calc-cell">
+                            <div class="calc-label">💰 חיוב עבודה (לפני הנחה)</div>
+                            <div class="calc-value" id="prevWorkCost-0">0 ₪</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Discount Row -->
+                    <div class="discount-row">
+                        <label>🎓 הנחת מתלמד:</label>
+                        <input type="number" class="discount-input" id="discountPct-0" value="35" min="0" max="100" step="1" oninput="previewCalculation(0)">
+                        <span style="font-weight:700; color:#e65100;">%</span>
+                        <div class="discount-result">
+                            <div class="discount-chip">
+                                <div class="dc-label">💸 סכום הנחה</div>
+                                <div class="dc-value" id="prevDiscountAmt-0">0 ₪</div>
+                            </div>
+                            <div class="discount-chip after-discount">
+                                <div class="dc-label">✅ חיוב עבודה אחרי הנחה</div>
+                                <div class="dc-value" id="prevWorkAfterDiscount-0">0 ₪</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Detail Box -->
+                    <div class="resource-detail-box" id="prevResourceBox-0">
+                        <h4>⚙️ פירוט עלויות משאבים</h4>
+                        <div id="prevResourceLines-0">
+                            <div style="color:#999; padding: 10px; text-align:center;">לא נבחרו משאבים</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-total-row">
+                        סה"כ לרשומה (אחרי הנחה + משאבים): <span id="prevTotal-0">0</span> ₪
+                    </div>
+                </div>
+
                 <div class="buttons-row">
+                    <button class="calc-btn" onclick="previewCalculation(0)">🔢 חשב סה"כ</button>
                     <button class="btn" onclick="addEntry(0)">➕ הוסף רשומה</button>
                     <button class="btn email-btn" onclick="sendEmail(0)">📧 שלח במייל</button>
                     <button class="btn" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" onclick="printProject(0)">🖨️ הדפסה</button>
@@ -860,17 +1084,20 @@
                     <table id="dataTable-0">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>תאריך התחלה</th>
                                 <th>תאריך סיום</th>
                                 <th>ימי עבודה</th>
                                 <th>סה"כ שעות</th>
                                 <th>נושא כללי</th>
                                 <th>מרכיב שנבנה</th>
-                                <th>משאבים ששימשו</th>
+                                <th>משאבים</th>
                                 <th>הערות</th>
                                 <th>עלות משאבים (₪)</th>
-                                <th>חיוב שעתי (₪)</th>
-                                <th>חיוב נטו (₪)</th>
+                                <th>חיוב עבודה (₪)</th>
+                                <th>הנחה %</th>
+                                <th>חיוב אחרי הנחה (₪)</th>
+                                <th>סה"כ רשומה (₪)</th>
                                 <th>פעולות</th>
                             </tr>
                         </thead>
@@ -900,6 +1127,36 @@
                     <h3>💰 סה"כ הכנסה גולמית</h3>
                     <div class="summary-value" id="totalIncome-0">0</div>
                     <div class="summary-label">₪</div>
+                </div>
+            </div>
+
+            <!-- Grand Total Summary -->
+            <div class="grand-total-box" id="grandTotal-0">
+                <h2>🏆 סיכום כולל - כל הרשומות</h2>
+                <div class="grand-total-grid">
+                    <div class="grand-total-cell">
+                        <div class="gt-label">📋 מספר רשומות</div>
+                        <div class="gt-value" id="gtRecords-0">0</div>
+                    </div>
+                    <div class="grand-total-cell">
+                        <div class="gt-label">📅 סה"כ ימי עבודה</div>
+                        <div class="gt-value" id="gtDays-0">0</div>
+                    </div>
+                    <div class="grand-total-cell">
+                        <div class="gt-label">⏰ סה"כ שעות</div>
+                        <div class="gt-value" id="gtHours-0">0</div>
+                    </div>
+                    <div class="grand-total-cell">
+                        <div class="gt-label">💰 חיוב עבודה</div>
+                        <div class="gt-value" id="gtWorkCharge-0">0 ₪</div>
+                    </div>
+                    <div class="grand-total-cell">
+                        <div class="gt-label">⚙️ עלות משאבים</div>
+                        <div class="gt-value" id="gtResourceCost-0">0 ₪</div>
+                    </div>
+                </div>
+                <div class="grand-total-final">
+                    💎 סה"כ כללי: <span id="gtGrandTotal-0">0</span> ₪
                 </div>
             </div>
 
@@ -1551,6 +1808,77 @@
             return diffDays;
         }
 
+        function fmtNum(n) {
+            return Number(n).toLocaleString('he-IL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function fmtInt(n) {
+            return Number(n).toLocaleString('he-IL');
+        }
+
+        function previewCalculation(projectId) {
+            const startDate = document.getElementById(`startDate-${projectId}`).value;
+            const endDate = document.getElementById(`endDate-${projectId}`).value;
+            const hoursPerDay = parseFloat(document.getElementById(`hours-${projectId}`).value) || 0;
+            const hourlyRate = parseFloat(document.getElementById(`hourlyRate-${projectId}`).value) || 0;
+            const discountPct = parseFloat(document.getElementById(`discountPct-${projectId}`).value) || 0;
+            const selectedResources = getSelectedResources(projectId);
+            
+            const preview = document.getElementById(`calcPreview-${projectId}`);
+            
+            if (!startDate || !endDate) {
+                alert('נא למלא תאריך התחלה ותאריך סיום');
+                return;
+            }
+            
+            const workDays = calculateDaysBetweenDates(startDate, endDate);
+            const totalHours = workDays * hoursPerDay;
+            const workCharge = totalHours * hourlyRate;
+            
+            // Discount calculation
+            const discountAmt = workCharge * (discountPct / 100);
+            const workAfterDiscount = workCharge - discountAmt;
+            
+            // Resource details
+            let resourceCost = 0;
+            const resContainer = document.getElementById(`prevResourceLines-${projectId}`);
+            resContainer.innerHTML = '';
+            
+            if (selectedResources.length > 0) {
+                selectedResources.forEach(name => {
+                    const dailyCost = projects[projectId].resources[name] || 0;
+                    const totalCost = dailyCost * workDays;
+                    resourceCost += totalCost;
+                    const line = document.createElement('div');
+                    line.className = 'resource-detail-line';
+                    line.innerHTML = `<span class="rd-name">⚙️ ${name}</span><span class="rd-calc">${fmtNum(dailyCost)} ₪/יום × ${workDays} ימים</span><span class="rd-total">${fmtNum(totalCost)} ₪</span>`;
+                    resContainer.appendChild(line);
+                });
+                // Total line
+                const totalLine = document.createElement('div');
+                totalLine.className = 'resource-detail-total';
+                totalLine.innerHTML = `<span>סה"כ עלות משאבים</span><span>${fmtNum(resourceCost)} ₪</span>`;
+                resContainer.appendChild(totalLine);
+            } else {
+                resContainer.innerHTML = '<div style="color:#999; padding: 10px; text-align:center;">לא נבחרו משאבים</div>';
+            }
+            
+            const grandTotal = workAfterDiscount + resourceCost;
+            
+            // Sync discount to entry form
+            const entryDiscount = document.getElementById(`discountEntry-${projectId}`);
+            if (entryDiscount) entryDiscount.value = discountPct;
+            
+            document.getElementById(`prevDays-${projectId}`).textContent = fmtInt(workDays);
+            document.getElementById(`prevHours-${projectId}`).textContent = fmtInt(totalHours);
+            document.getElementById(`prevRate-${projectId}`).textContent = fmtNum(hourlyRate) + ' ₪';
+            document.getElementById(`prevWorkCost-${projectId}`).textContent = fmtNum(workCharge) + ' ₪';
+            document.getElementById(`prevDiscountAmt-${projectId}`).textContent = fmtNum(discountAmt) + ' ₪';
+            document.getElementById(`prevWorkAfterDiscount-${projectId}`).textContent = fmtNum(workAfterDiscount) + ' ₪';
+            document.getElementById(`prevTotal-${projectId}`).textContent = fmtNum(grandTotal);
+            
+            preview.classList.add('visible');
+        }
+
         function addEntry(projectId) {
             const startDate = document.getElementById(`startDate-${projectId}`).value;
             const endDate = document.getElementById(`endDate-${projectId}`).value;
@@ -1558,6 +1886,7 @@
             const component = document.getElementById(`component-${projectId}`).value;
             const hoursPerDay = parseFloat(document.getElementById(`hours-${projectId}`).value);
             const hourlyRate = parseFloat(document.getElementById(`hourlyRate-${projectId}`).value);
+            const discountPct = parseFloat(document.getElementById(`discountEntry-${projectId}`)?.value) || 0;
             const notes = document.getElementById(`notes-${projectId}`).value;
             const selectedResources = getSelectedResources(projectId);
 
@@ -1575,7 +1904,9 @@
             });
 
             const grossCharge = totalHours * hourlyRate;
-            const netCharge = grossCharge - resourceCost;
+            const discountAmt = grossCharge * (discountPct / 100);
+            const chargeAfterDiscount = grossCharge - discountAmt;
+            const netCharge = chargeAfterDiscount + resourceCost;
 
             const entry = {
                 startDate,
@@ -1589,6 +1920,9 @@
                 resourceCost,
                 hourlyRate,
                 grossCharge,
+                discountPct,
+                discountAmt,
+                chargeAfterDiscount,
                 netCharge
             };
 
@@ -1603,6 +1937,10 @@
             document.querySelectorAll(`#resourceSelect-${projectId} .resource-tag`).forEach(tag => {
                 tag.classList.remove('selected');
             });
+
+            // Hide calculation preview
+            const preview = document.getElementById(`calcPreview-${projectId}`);
+            if (preview) preview.classList.remove('visible');
 
             renderTable(projectId);
             updateSummary(projectId);
@@ -1623,19 +1961,26 @@
             tbody.innerHTML = '';
 
             projects[projectId].entries.forEach((entry, index) => {
+                const dp = entry.discountPct || 0;
+                const da = entry.discountAmt || 0;
+                const cad = entry.chargeAfterDiscount !== undefined ? entry.chargeAfterDiscount : entry.grossCharge;
+                const entryTotal = cad + entry.resourceCost;
                 const row = tbody.insertRow();
                 row.innerHTML = `
+                    <td><span class="record-num">${index + 1}</span></td>
                     <td>${entry.startDate}</td>
                     <td>${entry.endDate}</td>
-                    <td>${entry.workDays}</td>
-                    <td>${entry.totalHours}</td>
+                    <td>${fmtInt(entry.workDays)}</td>
+                    <td>${fmtInt(entry.totalHours)}</td>
                     <td>${entry.topic}</td>
                     <td>${entry.component}</td>
                     <td>${entry.resources.join(', ')}</td>
                     <td>${entry.notes || '-'}</td>
-                    <td>${entry.resourceCost.toFixed(2)}</td>
-                    <td>${entry.hourlyRate.toFixed(2)}</td>
-                    <td>${entry.netCharge.toFixed(2)}</td>
+                    <td>${fmtNum(entry.resourceCost)}</td>
+                    <td>${fmtNum(entry.grossCharge)}</td>
+                    <td>${dp > 0 ? dp + '%' : '-'}</td>
+                    <td>${fmtNum(cad)}</td>
+                    <td><strong>${fmtNum(entryTotal)}</strong></td>
                     <td><button class="delete-btn" onclick="deleteEntry(${projectId}, ${index})">🗑️ מחק</button></td>
                 `;
             });
@@ -1646,27 +1991,41 @@
             let totalHours = 0;
             let totalResourceCost = 0;
             let totalGrossIncome = 0;
+            let totalAfterDiscount = 0;
 
             projects[projectId].entries.forEach(entry => {
                 totalDays += entry.workDays;
                 totalHours += entry.totalHours;
                 totalResourceCost += entry.resourceCost;
                 totalGrossIncome += entry.grossCharge;
+                totalAfterDiscount += (entry.chargeAfterDiscount !== undefined ? entry.chargeAfterDiscount : entry.grossCharge);
             });
 
-            const netProfit = totalGrossIncome - totalResourceCost;
-            const avgHourlyRate = totalHours > 0 ? netProfit / totalHours : 0;
+            const grandTotal = totalAfterDiscount + totalResourceCost;
+            const totalDiscount = totalGrossIncome - totalAfterDiscount;
+            const avgHourlyRate = totalHours > 0 ? totalAfterDiscount / totalHours : 0;
 
-            document.getElementById(`totalDays-${projectId}`).textContent = totalDays;
-            document.getElementById(`totalHours-${projectId}`).textContent = totalHours;
-            document.getElementById(`totalResourceCost-${projectId}`).textContent = totalResourceCost.toFixed(2);
-            document.getElementById(`totalIncome-${projectId}`).textContent = totalGrossIncome.toFixed(2);
+            document.getElementById(`totalDays-${projectId}`).textContent = fmtInt(totalDays);
+            document.getElementById(`totalHours-${projectId}`).textContent = fmtInt(totalHours);
+            document.getElementById(`totalResourceCost-${projectId}`).textContent = fmtNum(totalResourceCost);
+            document.getElementById(`totalIncome-${projectId}`).textContent = fmtNum(totalAfterDiscount);
             
-            document.getElementById(`grossIncome-${projectId}`).textContent = totalGrossIncome.toFixed(2) + ' ₪';
-            document.getElementById(`resourceCosts-${projectId}`).textContent = totalResourceCost.toFixed(2) + ' ₪';
-            document.getElementById(`netProfit-${projectId}`).textContent = netProfit.toFixed(2) + ' ₪';
-            document.getElementById(`avgHourlyRate-${projectId}`).textContent = avgHourlyRate.toFixed(2) + ' ₪/שעה';
+            document.getElementById(`grossIncome-${projectId}`).textContent = fmtNum(totalGrossIncome) + ' ₪';
+            document.getElementById(`resourceCosts-${projectId}`).textContent = fmtNum(totalResourceCost) + ' ₪';
+            document.getElementById(`netProfit-${projectId}`).textContent = fmtNum(totalAfterDiscount - totalResourceCost) + ' ₪';
+            document.getElementById(`avgHourlyRate-${projectId}`).textContent = fmtNum(avgHourlyRate) + ' ₪/שעה';
             
+            // Update Grand Total box
+            const gtRecords = document.getElementById(`gtRecords-${projectId}`);
+            if (gtRecords) {
+                gtRecords.textContent = projects[projectId].entries.length;
+                document.getElementById(`gtDays-${projectId}`).textContent = fmtInt(totalDays);
+                document.getElementById(`gtHours-${projectId}`).textContent = fmtInt(totalHours);
+                document.getElementById(`gtWorkCharge-${projectId}`).textContent = fmtNum(totalAfterDiscount) + ' ₪';
+                document.getElementById(`gtResourceCost-${projectId}`).textContent = fmtNum(totalResourceCost) + ' ₪';
+                document.getElementById(`gtGrandTotal-${projectId}`).textContent = fmtNum(grandTotal);
+            }
+
             updatePaymentBalance(projectId);
         }
 
@@ -1771,17 +2130,29 @@
         }
 
         function shareToWhatsApp(projectId) {
-            const projectName = projects[projectId].name;
-            const projectData = JSON.stringify(projects[projectId]);
-            const encodedData = btoa(encodeURIComponent(projectData));
+            const p = projects[projectId];
+            const pName = p.name;
+            const entries = p.entries || [];
+            const gv = (id) => document.getElementById(id + '-' + projectId)?.textContent || '0';
             
-            const baseUrl = window.location.href.split('?')[0];
-            const shareUrl = `${baseUrl}?project=${encodedData}`;
+            let sDays=0, sHours=0, sRes=0, sAfter=0, sTotal=0;
+            entries.forEach(e => {
+                const cad = e.chargeAfterDiscount !== undefined ? e.chargeAfterDiscount : e.grossCharge;
+                sDays += e.workDays; sHours += e.totalHours;
+                sRes += e.resourceCost; sAfter += cad; sTotal += cad + e.resourceCost;
+            });
             
-            const message = `היי! אני משתף/ת איתך את הפרויקט "${projectName}" 📊\n\nלחץ/י על הקישור לצפייה:\n${shareUrl}`;
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            let msg = '*📊 דוח פרויקט: ' + pName + '*\n\n';
+            msg += '📋 *' + entries.length + ' רשומות*\n';
+            msg += '📅 ימי עבודה: ' + fmtInt(sDays) + '\n';
+            msg += '⏰ שעות: ' + fmtInt(sHours) + '\n';
+            msg += '💰 חיוב עבודה: ' + fmtNum(sAfter) + ' ₪\n';
+            msg += '⚙️ משאבים: ' + fmtNum(sRes) + ' ₪\n';
+            msg += '\n💎 *סה"כ כללי: ' + fmtNum(sTotal) + ' ₪*\n';
+            msg += '\n💵 הכנסה נטו: ' + gv('netProfit') + '\n';
+            msg += '📈 שכר שעתי ממוצע: ' + gv('avgHourlyRate') + '\n';
             
-            window.open(whatsappUrl, '_blank');
+            window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
         }
 
         function manualSave(projectId) {
@@ -1905,37 +2276,170 @@
         }
 
         function sendEmail(projectId) {
-            const projectName = projects[projectId].name;
-            const tableHTML = document.querySelector(`#dataTable-${projectId}`).outerHTML;
-            const summaryDiv = document.getElementById(`summary-${projectId}`).outerHTML;
-            const financialDiv = document.querySelector(`#project-${projectId} .financial-summary`).outerHTML;
+            const p = projects[projectId];
+            const pName = p.name;
+            const entries = p.entries || [];
+            const now = new Date();
+            const dateStr = now.toLocaleString('he-IL');
 
-            const emailBody = `
-                <html dir="rtl">
-                <head><style>
-                    table { border-collapse: collapse; width: 100%; }
-                    th, td { border: 1px solid #ddd; padding: 8px; text-align: right; }
-                    th { background-color: #667eea; color: white; }
-                </style></head>
-                <body>
-                    <h1>יומן פרויקט: ${projectName}</h1>
-                    ${tableHTML}
-                    <br><br>
-                    ${summaryDiv}
-                    <br><br>
-                    ${financialDiv}
-                </body>
-                </html>
-            `;
+            // Helper: format number with commas
+            function rN(n, d) {
+                if (d === 0) return Number(n).toLocaleString('he-IL');
+                return Number(n).toLocaleString('he-IL', {minimumFractionDigits:2, maximumFractionDigits:2});
+            }
 
-            const blob = new Blob([emailBody], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            // Read summary values from DOM
+            const gv = (id) => document.getElementById(id + '-' + projectId)?.textContent || '0';
+            const gi = (id) => document.getElementById(id + '-' + projectId)?.value || '0';
+
+            // Build table rows from data
+            let rows = '';
+            let sDays=0, sHours=0, sRes=0, sGross=0, sDisc=0, sAfter=0, sTotal=0;
+            entries.forEach((e, i) => {
+                const dp = e.discountPct || 0;
+                const cad = e.chargeAfterDiscount !== undefined ? e.chargeAfterDiscount : e.grossCharge;
+                const tot = cad + e.resourceCost;
+                sDays += e.workDays; sHours += e.totalHours;
+                sRes += e.resourceCost; sGross += e.grossCharge;
+                sDisc += (e.discountAmt || 0); sAfter += cad; sTotal += tot;
+                rows += '<tr>' +
+                    '<td style="text-align:center"><span style="background:#667eea;color:#fff;width:26px;height:26px;border-radius:50%;display:inline-block;line-height:26px;font-weight:700;font-size:0.85em">' + (i+1) + '</span></td>' +
+                    '<td>' + e.startDate + '</td><td>' + e.endDate + '</td>' +
+                    '<td>' + rN(e.workDays,0) + '</td><td>' + rN(e.totalHours,0) + '</td>' +
+                    '<td>' + e.topic + '</td><td>' + e.component + '</td>' +
+                    '<td>' + (e.resources||[]).join(', ') + '</td>' +
+                    '<td>' + (e.notes||'-') + '</td>' +
+                    '<td>' + rN(e.resourceCost) + '</td>' +
+                    '<td>' + rN(e.grossCharge) + '</td>' +
+                    '<td>' + (dp > 0 ? dp+'%' : '-') + '</td>' +
+                    '<td>' + rN(cad) + '</td>' +
+                    '<td style="font-weight:800;background:#f0f7ff">' + rN(tot) + '</td></tr>';
+            });
+            // Totals row
+            rows += '<tr style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-weight:800">' +
+                '<td colspan="3" style="color:#fff;border-color:rgba(255,255,255,0.3)">סה&quot;כ</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sDays,0) + '</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sHours,0) + '</td>' +
+                '<td colspan="4" style="color:#fff;border-color:rgba(255,255,255,0.3)"></td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sRes) + '</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sGross) + '</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sDisc) + '</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sAfter) + '</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3);font-size:1.1em">' + rN(sTotal) + '</td></tr>';
+
+            // Resources list
+            let resList = '';
+            for (const [nm, cost] of Object.entries(p.resources || {})) {
+                resList += '<div style="display:flex;justify-content:space-between;padding:8px 14px;background:#f5f5f5;border-radius:6px;margin-bottom:5px">' +
+                    '<span style="font-weight:600">' + nm + '</span>' +
+                    '<span style="font-weight:700;color:#667eea">' + rN(cost) + ' ₪/יום</span></div>';
+            }
+
+            // Build full HTML report
+            var h = '\uFEFF'; // BOM for UTF-8
+            h += '<!DOCTYPE html><html lang="he" dir="rtl"><head>';
+            h += '<meta charset="UTF-8">';
+            h += '<meta name="viewport" content="width=device-width,initial-scale=1.0">';
+            h += '<title>דוח פרויקט: ' + pName + '</title>';
+            h += '<style>';
+            h += '*{margin:0;padding:0;box-sizing:border-box}';
+            h += 'body{font-family:Segoe UI,Tahoma,Arial,sans-serif;background:#f0f2f5;padding:20px;direction:rtl;color:#333}';
+            h += '.ctr{max-width:1200px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.15);overflow:hidden}';
+            h += '.hdr{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:30px;text-align:center}';
+            h += '.hdr h1{font-size:2em;font-weight:800;margin-bottom:8px}.hdr p{opacity:.9;font-size:1.05em}';
+            h += '.cnt{padding:25px}';
+            h += '.sec{background:#f9f9f9;border:2px solid #e0e0e0;border-radius:12px;padding:20px;margin-bottom:20px}';
+            h += '.sec h2{color:#667eea;font-size:1.3em;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid #667eea}';
+            h += 'table{width:100%;border-collapse:collapse;font-size:.88em}';
+            h += 'th{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:10px 8px;text-align:right;font-weight:700;white-space:nowrap}';
+            h += 'td{padding:9px 8px;border-bottom:1px solid #e0e0e0;text-align:right}';
+            h += 'tr:nth-child(even){background:#fafafa}';
+            h += '.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px}';
+            h += '.sc{background:#fff;padding:18px;border-radius:10px;border:2px solid #e0e0e0;text-align:center}';
+            h += '.sc h3{color:#667eea;font-size:.95em;margin-bottom:10px}.sc .v{font-size:1.8em;font-weight:800;color:#333}.sc .l{color:#666;margin-top:5px;font-size:.85em}';
+            h += '.gt{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:25px;border-radius:12px;margin-top:20px;border:3px solid gold}';
+            h += '.gt h2{text-align:center;margin-bottom:15px;color:#fff;border:none;padding:0}';
+            h += '.gg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:15px}';
+            h += '.gc{background:rgba(255,255,255,.12);padding:14px;border-radius:8px;text-align:center}';
+            h += '.gc .gl{font-size:.85em;opacity:.9;margin-bottom:6px}.gc .gv{font-size:1.6em;font-weight:800}';
+            h += '.gf{background:gold;color:#1a237e;padding:16px;border-radius:10px;text-align:center;font-size:1.8em;font-weight:900}';
+            h += '.fn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:25px;border-radius:12px;margin-top:20px}';
+            h += '.fn h2{text-align:center;margin-bottom:15px;color:#fff;border:none;padding:0}';
+            h += '.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}';
+            h += '.fi{background:rgba(255,255,255,.12);padding:14px;border-radius:8px;text-align:center}';
+            h += '.fi .fl{font-size:.85em;margin-bottom:6px}.fi .fv{font-size:1.5em;font-weight:800}';
+            h += '.ft{text-align:center;padding:15px;color:#999;font-size:.85em;border-top:1px solid #eee;margin-top:20px}';
+            h += '@media print{body{background:#fff;padding:0}.ctr{box-shadow:none}}';
+            h += '</style></head><body>';
+            h += '<div class="ctr">';
+
+            // Header
+            h += '<div class="hdr"><h1>\u{1F4CA} דוח פרויקט: ' + pName + '</h1>';
+            h += '<p>תאריך הפקה: ' + dateStr + '</p></div>';
+            h += '<div class="cnt">';
+
+            // Resources section
+            h += '<div class="sec"><h2>\u2699\uFE0F משאבים בשימוש</h2>';
+            h += (resList || '<p style="color:#999">לא הוגדרו משאבים</p>');
+            h += '</div>';
+
+            // Data table
+            h += '<div class="sec" style="overflow-x:auto"><h2>\u{1F4CB} טבלת נתונים — ' + entries.length + ' רשומות</h2>';
+            h += '<table><thead><tr>';
+            h += '<th>#</th><th>התחלה</th><th>סיום</th><th>ימים</th><th>שעות</th>';
+            h += '<th>נושא</th><th>מרכיב</th><th>משאבים</th><th>הערות</th>';
+            h += '<th>עלות משאבים</th><th>חיוב עבודה</th><th>הנחה</th>';
+            h += '<th>אחרי הנחה</th><th>סה"כ רשומה</th>';
+            h += '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+
+            // Summary cards
+            h += '<div class="sec"><h2>\u{1F4CA} סיכום כללי</h2><div class="sg">';
+            h += '<div class="sc"><h3>\u{1F4C5} ימי עבודה</h3><div class="v">' + gv('totalDays') + '</div><div class="l">ימים</div></div>';
+            h += '<div class="sc"><h3>\u23F0 שעות עבודה</h3><div class="v">' + gv('totalHours') + '</div><div class="l">שעות</div></div>';
+            h += '<div class="sc"><h3>\u{1F4B8} עלות משאבים</h3><div class="v">' + gv('totalResourceCost') + '</div><div class="l">\u20AA</div></div>';
+            h += '<div class="sc"><h3>\u{1F4B0} הכנסה</h3><div class="v">' + gv('totalIncome') + '</div><div class="l">\u20AA</div></div>';
+            h += '</div></div>';
+
+            // Grand total
+            h += '<div class="gt"><h2>\u{1F3C6} סיכום כולל — כל הרשומות</h2><div class="gg">';
+            h += '<div class="gc"><div class="gl">\u{1F4CB} רשומות</div><div class="gv">' + entries.length + '</div></div>';
+            h += '<div class="gc"><div class="gl">\u{1F4C5} ימים</div><div class="gv">' + rN(sDays,0) + '</div></div>';
+            h += '<div class="gc"><div class="gl">\u23F0 שעות</div><div class="gv">' + rN(sHours,0) + '</div></div>';
+            h += '<div class="gc"><div class="gl">\u{1F4B0} חיוב עבודה</div><div class="gv">' + rN(sAfter) + ' \u20AA</div></div>';
+            h += '<div class="gc"><div class="gl">\u2699\uFE0F משאבים</div><div class="gv">' + rN(sRes) + ' \u20AA</div></div>';
+            h += '</div><div class="gf">\u{1F48E} סה"כ כללי: ' + rN(sTotal) + ' \u20AA</div></div>';
+
+            // Financial
+            h += '<div class="fn"><h2>\u{1F4B0} סיכום פיננסי</h2><div class="fg">';
+            h += '<div class="fi"><div class="fl">הכנסה ברוטו</div><div class="fv">' + gv('grossIncome') + '</div></div>';
+            h += '<div class="fi"><div class="fl">עלויות משאבים</div><div class="fv">' + gv('resourceCosts') + '</div></div>';
+            h += '<div class="fi"><div class="fl">\u{1F4B5} הכנסה נטו</div><div class="fv">' + gv('netProfit') + '</div></div>';
+            h += '<div class="fi"><div class="fl">שכר שעתי ממוצע</div><div class="fv">' + gv('avgHourlyRate') + '</div></div>';
+            h += '</div></div>';
+
+            // Investment
+            h += '<div class="sec" style="margin-top:20px"><h2>\u{1F4BC} סיכום השקעה</h2><div class="sg">';
+            h += '<div class="sc"><h3>השקעות קודמות</h3><div class="v">' + gv('previousInvestments') + '</div><div class="l">\u20AA</div></div>';
+            h += '<div class="sc"><h3>תחזית חדשה</h3><div class="v">' + gv('newInvestmentForecast') + '</div><div class="l">\u20AA</div></div>';
+            h += '<div class="sc" style="border:3px solid #667eea"><h3>\u{1F3AF} סה"כ השקעה</h3><div class="v" style="color:#667eea">' + gv('totalProjectInvestment') + '</div><div class="l">\u20AA</div></div>';
+            h += '</div></div>';
+
+            // Footer
+            h += '</div>'; // cnt
+            h += '<div class="ft">יומן פרויקטים מתקדם — ניהול משאבים ועלויות | ' + dateStr + '</div>';
+            h += '</div>'; // ctr
+            h += '</body></html>';
+
+            // Download with proper UTF-8
+            var blob = new Blob([h], {type: 'text/html;charset=utf-8'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
             a.href = url;
-            a.download = `${projectName}_report.html`;
+            var ts = now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+            a.download = pName.replace(/\s+/g,'_') + '_דוח_' + ts + '.html';
             a.click();
-
-            alert('קובץ דוח נוצר להורדה. ניתן לשלוח אותו במייל');
+            URL.revokeObjectURL(url);
+            alert('\u2705 דוח HTML מקצועי נוצר להורדה!\nניתן לפתוח בדפדפן או לשלוח במייל.');
         }
 
         function saveToLocalStorage() {
@@ -2306,11 +2810,19 @@
             if (entries.length === 0) {
                 md += `אין רשומות עדיין.\n\n`;
             } else {
-                md += `| תאריך התחלה | תאריך סיום | ימי עבודה | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | חיוב שעתי | חיוב נטו |\n`;
-                md += `|---|---|---|---|---|---|---|---|---|---|---|\n`;
-                entries.forEach(e => {
-                    md += `| ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(2)} | ${e.hourlyRate.toFixed(2)} | ${e.netCharge.toFixed(2)} |\n`;
+                md += `| # | תאריך התחלה | תאריך סיום | ימים | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | חיוב עבודה | הנחה | אחרי הנחה | סה"כ רשומה |\n`;
+                md += `|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
+                let mdDays=0, mdHours=0, mdRes=0, mdGross=0, mdAfter=0, mdTotal=0;
+                entries.forEach((e, i) => {
+                    const dp = e.discountPct || 0;
+                    const cad = e.chargeAfterDiscount !== undefined ? e.chargeAfterDiscount : e.grossCharge;
+                    const tot = cad + e.resourceCost;
+                    mdDays += e.workDays; mdHours += e.totalHours;
+                    mdRes += e.resourceCost; mdGross += e.grossCharge;
+                    mdAfter += cad; mdTotal += tot;
+                    md += `| ${i+1} | ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(2)} | ${e.grossCharge.toFixed(2)} | ${dp > 0 ? dp+'%' : '-'} | ${cad.toFixed(2)} | **${tot.toFixed(2)}** |\n`;
                 });
+                md += `| | | **סה"כ** | **${mdDays}** | **${mdHours}** | | | | | **${mdRes.toFixed(2)}** | **${mdGross.toFixed(2)}** | | **${mdAfter.toFixed(2)}** | **${mdTotal.toFixed(2)}** |\n`;
                 md += `\n`;
             }
 
@@ -2320,7 +2832,8 @@
             md += `- **סה"כ ימי עבודה:** ${getVal('totalDays')} ימים\n`;
             md += `- **סה"כ שעות עבודה:** ${getVal('totalHours')} שעות\n`;
             md += `- **סה"כ עלות משאבים:** ${getVal('totalResourceCost')} ₪\n`;
-            md += `- **סה"כ הכנסה גולמית:** ${getVal('totalIncome')} ₪\n\n`;
+            md += `- **סה"כ הכנסה (אחרי הנחה):** ${getVal('totalIncome')} ₪\n`;
+            md += `- **סה"כ כללי:** ${getVal('gtGrandTotal')} ₪\n\n`;
 
             // --- Token costs ---
             md += `## 🤖 עלויות טוקנים\n\n`;
@@ -2377,6 +2890,16 @@
             md += `- **הכנסה נטו:** ${getVal('netProfit')}\n`;
             md += `- **שכר שעתי ממוצע נטו:** ${getVal('avgHourlyRate')}\n`;
             md += `- **יתרה לתשלום:** ${getVal('balanceDue')}\n\n`;
+
+            // --- Grand Total ---
+            md += `## 🏆 סיכום כולל\n\n`;
+            md += `| נתון | ערך |\n|---|---|\n`;
+            md += `| רשומות | ${entries.length} |\n`;
+            md += `| ימי עבודה | ${getVal('gtDays')} |\n`;
+            md += `| שעות | ${getVal('gtHours')} |\n`;
+            md += `| חיוב עבודה | ${getVal('gtWorkCharge')} |\n`;
+            md += `| עלות משאבים | ${getVal('gtResourceCost')} |\n`;
+            md += `| **💎 סה"כ כללי** | **${getVal('gtGrandTotal')} ₪** |\n\n`;
 
             md += `---\n*נוצר אוטומטית מיומן פרויקטים מתקדם*\n`;
 
