@@ -116,7 +116,7 @@
             border-radius: 12px;
             margin-bottom: 25px;
             border: 2px solid #e0e0e0;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .section-title {
@@ -519,17 +519,367 @@
             min-height: 44px;
         }
 
+        /* === Print Header/Footer per page === */
+        .print-page-header {
+            display: none;
+        }
+        .print-page-footer {
+            display: none;
+        }
+
         /* === Print === */
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 15mm 12mm 18mm 12mm;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
             body {
-                background: white;
-                padding: 0;
+                background: white !important;
+                padding: 0 !important;
+                font-size: 10pt;
             }
+
             .container {
-                box-shadow: none;
+                box-shadow: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
             }
-            .btn, .delete-btn, .tabs, .add-resource-form, .buttons-row, .autosave-bar {
-                display: none;
+
+            /* Only show the active project content */
+            .project-content {
+                display: none !important;
+            }
+            .project-content.active {
+                display: block !important;
+            }
+
+            /* Hide interactive elements */
+            .btn, .delete-btn, .delete-row-btn, .tabs, .add-resource-form,
+            .buttons-row, .autosave-bar, .add-project-btn, .calc-preview,
+            .calc-btn, .resource-tag, .resource-select,
+            .payment-add-btn, .payment-form,
+            .add-resource-form button, .resource-item button,
+            #reportHistoryTable .delete-btn,
+            input[type="checkbox"],
+            .remove-tab {
+                display: none !important;
+            }
+
+            /* Hide the report history section in print */
+            .report-history-section {
+                display: none !important;
+            }
+
+            /* Show print headers */
+            .print-page-header {
+                display: block !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                color: white !important;
+                padding: 10px 20px !important;
+                margin: 0 -5mm 12px -5mm !important;
+                border-radius: 0 0 8px 8px !important;
+                font-size: 11pt;
+                font-weight: 700;
+                text-align: center;
+            }
+            .print-page-header .print-header-title {
+                font-size: 13pt;
+                margin-bottom: 2px;
+            }
+            .print-page-header .print-header-sub {
+                font-size: 9pt;
+                opacity: 0.85;
+            }
+
+            /* Show print footers */
+            .print-page-footer {
+                display: block !important;
+                text-align: center;
+                font-size: 8pt;
+                color: #999;
+                border-top: 1px solid #ddd;
+                padding-top: 6px;
+                margin-top: auto;
+                padding-bottom: 0;
+            }
+
+            /* Hide main title on all pages (it shows in headers) */
+            h1, .subtitle {
+                display: none !important;
+            }
+
+            /* ======= PAGE BREAKS ======= */
+            /* Each .section is its own page */
+            .project-content .section {
+                break-before: page !important;
+                page-break-before: always !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: white !important;
+            }
+            /* First section: no page break before */
+            .project-content .section:first-of-type {
+                break-before: auto !important;
+                page-break-before: auto !important;
+            }
+
+
+            /* Grand total box - inside data table section, avoid page break */
+            .grand-total-box {
+                display: block !important;
+                visibility: visible !important;
+                break-before: avoid !important;
+                page-break-before: avoid !important;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                margin-top: 15px !important;
+                background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%) !important;
+                color: white !important;
+                padding: 20px !important;
+                border-radius: 10px !important;
+                border: 2px solid gold !important;
+            }
+
+            /* Financial summary sections get their own page */
+            .financial-summary {
+                break-before: page !important;
+                page-break-before: always !important;
+            }
+
+            /* Prevent breaks inside these elements */
+            .summary-card, .financial-item, .grand-total-cell,
+            .resource-item, .resource-detail-line, .inline-result-box {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+
+            .section {
+                break-inside: auto !important;
+                page-break-inside: auto !important;
+            }
+
+            /* ======= TABLE FIX FOR PRINT ======= */
+            .table-wrapper {
+                overflow: visible !important;
+                width: 100% !important;
+            }
+
+            table {
+                min-width: 0 !important;
+                width: 100% !important;
+                font-size: 7pt !important;
+                table-layout: fixed !important;
+            }
+
+            th, td {
+                white-space: normal !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                padding: 4px 3px !important;
+                font-size: 7pt !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Column widths for data tables in print */
+            table[id^="dataTable"] th:nth-child(1),
+            table[id^="dataTable"] td:nth-child(1) { width: 3%; }  /* # */
+            table[id^="dataTable"] th:nth-child(2),
+            table[id^="dataTable"] td:nth-child(2) { width: 7%; }  /* תאריך הוספה */
+            table[id^="dataTable"] th:nth-child(3),
+            table[id^="dataTable"] td:nth-child(3) { width: 6%; }  /* תאריך התחלה */
+            table[id^="dataTable"] th:nth-child(4),
+            table[id^="dataTable"] td:nth-child(4) { width: 6%; }  /* תאריך סיום */
+            table[id^="dataTable"] th:nth-child(5),
+            table[id^="dataTable"] td:nth-child(5) { width: 4%; }  /* ימי עבודה */
+            table[id^="dataTable"] th:nth-child(6),
+            table[id^="dataTable"] td:nth-child(6) { width: 5%; }  /* שעות */
+            table[id^="dataTable"] th:nth-child(7),
+            table[id^="dataTable"] td:nth-child(7) { width: 10%; } /* נושא */
+            table[id^="dataTable"] th:nth-child(8),
+            table[id^="dataTable"] td:nth-child(8) { width: 10%; } /* מרכיב */
+            table[id^="dataTable"] th:nth-child(9),
+            table[id^="dataTable"] td:nth-child(9) { width: 8%; }  /* משאבים */
+            table[id^="dataTable"] th:nth-child(10),
+            table[id^="dataTable"] td:nth-child(10) { width: 10%; } /* הערות */
+            table[id^="dataTable"] th:nth-child(11),
+            table[id^="dataTable"] td:nth-child(11) { width: 6%; }  /* עלות משאבים */
+            table[id^="dataTable"] th:nth-child(12),
+            table[id^="dataTable"] td:nth-child(12) { width: 6%; }  /* חיוב עבודה */
+            table[id^="dataTable"] th:nth-child(13),
+            table[id^="dataTable"] td:nth-child(13) { width: 4%; }  /* הנחה */
+            table[id^="dataTable"] th:nth-child(14),
+            table[id^="dataTable"] td:nth-child(14) { width: 6%; }  /* חיוב אחרי הנחה */
+            table[id^="dataTable"] th:nth-child(15),
+            table[id^="dataTable"] td:nth-child(15) { width: 7%; }  /* סה"כ רשומה */
+            /* Hide delete column in print */
+            table th:last-child,
+            table td:last-child {
+                display: none !important;
+            }
+
+            th {
+                background: #667eea !important;
+                color: white !important;
+                font-weight: 700 !important;
+                font-size: 6.5pt !important;
+            }
+
+            /* ======= SUMMARY CARDS PRINT ======= */
+            .summary {
+                gap: 10px !important;
+                margin-top: 15px !important;
+            }
+            .summary-card {
+                padding: 10px !important;
+                border: 1px solid #ccc !important;
+            }
+            .summary-card h3 {
+                font-size: 8pt !important;
+            }
+            .summary-value {
+                font-size: 14pt !important;
+            }
+
+            /* ======= GRAND TOTAL BOX PRINT ======= */
+            .grand-total-box {
+                background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%) !important;
+                color: white !important;
+                padding: 20px !important;
+                border-radius: 10px !important;
+                border: 2px solid gold !important;
+            }
+            .grand-total-box h2 {
+                font-size: 14pt !important;
+                margin-bottom: 15px !important;
+            }
+            .grand-total-grid {
+                gap: 10px !important;
+            }
+            .grand-total-cell {
+                background: rgba(255,255,255,0.12) !important;
+                padding: 12px !important;
+            }
+            .grand-total-cell .gt-label {
+                font-size: 8pt !important;
+            }
+            .grand-total-cell .gt-value {
+                font-size: 14pt !important;
+            }
+            .grand-total-final {
+                background: gold !important;
+                color: #1a237e !important;
+                padding: 15px !important;
+                font-size: 16pt !important;
+                margin-top: 10px !important;
+            }
+
+            /* ======= FINANCIAL SUMMARY PRINT ======= */
+            .financial-summary {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                color: white !important;
+                padding: 20px !important;
+                border-radius: 10px !important;
+            }
+            .financial-summary h2 {
+                font-size: 13pt !important;
+            }
+            .financial-grid {
+                gap: 10px !important;
+            }
+            .financial-item {
+                background: rgba(255,255,255,0.1) !important;
+                padding: 10px !important;
+            }
+            .financial-item .value {
+                font-size: 12pt !important;
+            }
+            .net-profit {
+                font-size: 14pt !important;
+            }
+            .inline-result-box {
+                background: rgba(255,255,255,0.15) !important;
+                padding: 12px !important;
+                margin-top: 10px !important;
+            }
+
+            /* ======= SECTION HEADINGS PRINT ======= */
+            .section-title {
+                font-size: 13pt !important;
+                color: #667eea !important;
+                border-bottom: 2px solid #667eea;
+                padding-bottom: 8px;
+                margin-bottom: 12px !important;
+            }
+
+            /* Allow content to overflow across pages */
+            .section {
+                overflow: visible !important;
+            }
+
+            /* Make sure table rows can break to next page */
+            table {
+                break-inside: auto !important;
+                page-break-inside: auto !important;
+            }
+            thead {
+                display: table-header-group !important;
+            }
+            tr {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+
+            /* Summary section after data table (inside same .section) */
+            .summary {
+                margin-top: 15px !important;
+                gap: 8px !important;
+                display: grid !important;
+                visibility: visible !important;
+            }
+
+            /* ======= INPUT FIELDS PRINT ======= */
+            .input-group {
+                gap: 8px !important;
+            }
+            input, select, textarea {
+                border: 1px solid #ccc !important;
+                padding: 6px !important;
+                font-size: 9pt !important;
+            }
+            label {
+                font-size: 9pt !important;
+            }
+
+            /* ======= RESOURCE LISTS PRINT ======= */
+            .resource-management {
+                grid-template-columns: 1fr !important;
+            }
+            .resource-list {
+                padding: 10px !important;
+            }
+            .resource-item {
+                padding: 6px 8px !important;
+                font-size: 9pt !important;
+            }
+            .resource-item input {
+                border: 1px solid #ccc !important;
+                padding: 3px 5px !important;
+                font-size: 9pt !important;
+            }
+
+            /* ======= PAYMENT RECORDS PRINT ======= */
+            .payment-section {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
             }
         }
 
@@ -1093,8 +1443,8 @@
                 </div>
             </div>
 
-            <!-- Data Table -->
-            <div class="section">
+            <!-- Data Table + Summary + Grand Total (all in one section) -->
+            <div class="section" id="dataTableSection-0">
                 <h2 class="section-title">📋 טבלת נתונים</h2>
                 <div class="table-wrapper">
                     <table id="dataTable-0">
@@ -1121,59 +1471,59 @@
                         <tbody></tbody>
                     </table>
                 </div>
-            </div>
 
-            <!-- Summary -->
-            <div class="summary" id="summary-0">
-                <div class="summary-card">
-                    <h3>📅 סה"כ ימי עבודה</h3>
-                    <div class="summary-value" id="totalDays-0">0</div>
-                    <div class="summary-label">ימים</div>
+                <!-- Summary Cards -->
+                <div class="summary" id="summary-0">
+                    <div class="summary-card">
+                        <h3>📅 סה"כ ימי עבודה</h3>
+                        <div class="summary-value" id="totalDays-0">0</div>
+                        <div class="summary-label">ימים</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>⏰ סה"כ שעות עבודה</h3>
+                        <div class="summary-value" id="totalHours-0">0</div>
+                        <div class="summary-label">שעות</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>💸 סה"כ עלות משאבים</h3>
+                        <div class="summary-value" id="totalResourceCost-0">0</div>
+                        <div class="summary-label">₪</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>💰 סה"כ הכנסה גולמית</h3>
+                        <div class="summary-value" id="totalIncome-0">0</div>
+                        <div class="summary-label">₪</div>
+                    </div>
                 </div>
-                <div class="summary-card">
-                    <h3>⏰ סה"כ שעות עבודה</h3>
-                    <div class="summary-value" id="totalHours-0">0</div>
-                    <div class="summary-label">שעות</div>
-                </div>
-                <div class="summary-card">
-                    <h3>💸 סה"כ עלות משאבים</h3>
-                    <div class="summary-value" id="totalResourceCost-0">0</div>
-                    <div class="summary-label">₪</div>
-                </div>
-                <div class="summary-card">
-                    <h3>💰 סה"כ הכנסה גולמית</h3>
-                    <div class="summary-value" id="totalIncome-0">0</div>
-                    <div class="summary-label">₪</div>
-                </div>
-            </div>
 
-            <!-- Grand Total Summary -->
-            <div class="grand-total-box" id="grandTotal-0">
-                <h2>🏆 סיכום כולל - כל הרשומות</h2>
-                <div class="grand-total-grid">
-                    <div class="grand-total-cell">
-                        <div class="gt-label">📋 מספר רשומות</div>
-                        <div class="gt-value" id="gtRecords-0">0</div>
+                <!-- Grand Total Summary -->
+                <div class="grand-total-box" id="grandTotal-0">
+                    <h2>🏆 סיכום כולל - כל הרשומות</h2>
+                    <div class="grand-total-grid">
+                        <div class="grand-total-cell">
+                            <div class="gt-label">📋 מספר רשומות</div>
+                            <div class="gt-value" id="gtRecords-0">0</div>
+                        </div>
+                        <div class="grand-total-cell">
+                            <div class="gt-label">📅 סה"כ ימי עבודה</div>
+                            <div class="gt-value" id="gtDays-0">0</div>
+                        </div>
+                        <div class="grand-total-cell">
+                            <div class="gt-label">⏰ סה"כ שעות</div>
+                            <div class="gt-value" id="gtHours-0">0</div>
+                        </div>
+                        <div class="grand-total-cell">
+                            <div class="gt-label">💰 חיוב עבודה</div>
+                            <div class="gt-value" id="gtWorkCharge-0">0 ₪</div>
+                        </div>
+                        <div class="grand-total-cell">
+                            <div class="gt-label">⚙️ עלות משאבים</div>
+                            <div class="gt-value" id="gtResourceCost-0">0 ₪</div>
+                        </div>
                     </div>
-                    <div class="grand-total-cell">
-                        <div class="gt-label">📅 סה"כ ימי עבודה</div>
-                        <div class="gt-value" id="gtDays-0">0</div>
+                    <div class="grand-total-final">
+                        💎 סה"כ כללי: <span id="gtGrandTotal-0">0</span> ₪
                     </div>
-                    <div class="grand-total-cell">
-                        <div class="gt-label">⏰ סה"כ שעות</div>
-                        <div class="gt-value" id="gtHours-0">0</div>
-                    </div>
-                    <div class="grand-total-cell">
-                        <div class="gt-label">💰 חיוב עבודה</div>
-                        <div class="gt-value" id="gtWorkCharge-0">0 ₪</div>
-                    </div>
-                    <div class="grand-total-cell">
-                        <div class="gt-label">⚙️ עלות משאבים</div>
-                        <div class="gt-value" id="gtResourceCost-0">0 ₪</div>
-                    </div>
-                </div>
-                <div class="grand-total-final">
-                    💎 סה"כ כללי: <span id="gtGrandTotal-0">0</span> ₪
                 </div>
             </div>
 
@@ -1602,7 +1952,7 @@
         </div>
 
         <!-- Report History Section -->
-        <div class="section" style="margin-top: 30px;">
+        <div class="section report-history-section" style="margin-top: 30px;">
             <h2 class="section-title">📁 היסטוריית דוחות שנשמרו</h2>
             <div class="table-wrapper">
                 <table id="reportHistoryTable">
@@ -2126,7 +2476,84 @@
         }
 
         function printProject(projectId) {
+            const projectName = projects[projectId].name;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('he-IL');
+
+            // Remove any previously injected print elements
+            document.querySelectorAll('.print-injected').forEach(function(el) { el.remove(); });
+
+            var projectContent = document.getElementById('project-' + projectId);
+            if (!projectContent) return;
+
+            var sectionTitles = [
+                { match: 'ניהול משאבים', title: 'ניהול משאבים' },
+                { match: 'הוספת רשומה', title: 'הוספת רשומה חדשה' },
+                { match: 'טבלת נתונים', title: 'טבלת נתונים + סיכום כולל' },
+                { match: 'תוכנית לפיתוח', title: 'תוכנית לפיתוח והשלמת הפרויקט' },
+                { match: 'מחשבון עלויות טוקנים', title: 'מחשבון עלויות טוקנים' },
+                { match: 'עלויות קבועות', title: 'עלויות קבועות לתחזוקה' },
+                { match: 'תחזית הכנסות', title: 'תחזית הכנסות חודשית' }
+            ];
+
+            var pageNum = 1;
+
+            function makeHeader(title, page) {
+                var hdr = document.createElement('div');
+                hdr.className = 'print-page-header print-injected';
+                hdr.innerHTML =
+                    '<div class="print-header-title">📊 ' + projectName + '</div>' +
+                    '<div class="print-header-sub">' + title + ' | ' + dateStr + ' | עמוד ' + page + '</div>';
+                return hdr;
+            }
+
+            function makeFooter(page) {
+                var ftr = document.createElement('div');
+                ftr.className = 'print-page-footer print-injected';
+                ftr.innerHTML = 'יומן פרויקטים מתקדם — ' + projectName + ' | ' + dateStr + ' | עמוד ' + page;
+                return ftr;
+            }
+
+            // Add headers/footers to each .section
+            var allSections = projectContent.querySelectorAll('.section');
+            allSections.forEach(function(section) {
+                var titleEl = section.querySelector('.section-title');
+                if (!titleEl) return;
+                var titleText = titleEl.textContent.trim();
+
+                var sectionTitle = titleText;
+                for (var i = 0; i < sectionTitles.length; i++) {
+                    if (titleText.indexOf(sectionTitles[i].match) !== -1) {
+                        sectionTitle = sectionTitles[i].title;
+                        break;
+                    }
+                }
+
+                section.insertBefore(makeHeader(sectionTitle, pageNum), section.firstChild);
+                section.appendChild(makeFooter(pageNum));
+                pageNum++;
+            });
+
+            // Financial summaries get their own pages
+            var financialSummaries = projectContent.querySelectorAll('.financial-summary');
+            var financialTitles = [
+                'דוח מסכם סופי — רווח/הפסד חודשי',
+                'סיכום פיננסי סופי ומעקב תשלומים'
+            ];
+            financialSummaries.forEach(function(fs, idx) {
+                var title = financialTitles[idx] || 'סיכום פיננסי';
+                fs.insertBefore(makeHeader(title, pageNum), fs.firstChild);
+                fs.appendChild(makeFooter(pageNum));
+                pageNum++;
+            });
+
+            // Print
             window.print();
+
+            // Clean up
+            setTimeout(function() {
+                document.querySelectorAll('.print-injected').forEach(function(el) { el.remove(); });
+            }, 1500);
         }
 
         function createShareableLink(projectId) {
