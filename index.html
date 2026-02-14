@@ -323,6 +323,22 @@
             background: #cc0000;
         }
 
+        .delete-row-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4em;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: transform 0.2s, background 0.2s;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        .delete-row-btn:hover {
+            transform: scale(1.3);
+            background: #ffe0e0;
+        }
+
         .summary {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1085,6 +1101,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>תאריך הוספה</th>
                                 <th>תאריך התחלה</th>
                                 <th>תאריך סיום</th>
                                 <th>ימי עבודה</th>
@@ -1809,7 +1826,7 @@
         }
 
         function fmtNum(n) {
-            return Number(n).toLocaleString('he-IL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return Number(n).toLocaleString('he-IL', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
         function fmtInt(n) {
             return Number(n).toLocaleString('he-IL');
@@ -1909,6 +1926,7 @@
             const netCharge = chargeAfterDiscount + resourceCost;
 
             const entry = {
+                dateAdded: new Date().toLocaleString('he-IL'),
                 startDate,
                 endDate,
                 workDays,
@@ -1968,6 +1986,7 @@
                 const row = tbody.insertRow();
                 row.innerHTML = `
                     <td><span class="record-num">${index + 1}</span></td>
+                    <td style="font-size:0.85em; color:#888;">${entry.dateAdded || '-'}</td>
                     <td>${entry.startDate}</td>
                     <td>${entry.endDate}</td>
                     <td>${fmtInt(entry.workDays)}</td>
@@ -1981,7 +2000,7 @@
                     <td>${dp > 0 ? dp + '%' : '-'}</td>
                     <td>${fmtNum(cad)}</td>
                     <td><strong>${fmtNum(entryTotal)}</strong></td>
-                    <td><button class="delete-btn" onclick="deleteEntry(${projectId}, ${index})">🗑️ מחק</button></td>
+                    <td><button class="delete-row-btn" onclick="deleteEntry(${projectId}, ${index})" title="מחק רשומה">🗑️</button></td>
                 `;
             });
         }
@@ -2073,9 +2092,9 @@
                 div.innerHTML = `
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
                         ${record.invoiceDate ? `<div><strong>📅 תאריך חיוב:</strong> ${record.invoiceDate}</div>` : ''}
-                        ${record.invoiceAmount ? `<div><strong>💵 סכום חיוב:</strong> ${record.invoiceAmount.toFixed(2)} ₪</div>` : ''}
+                        ${record.invoiceAmount ? `<div><strong>💵 סכום חיוב:</strong> ${record.invoiceAmount.toFixed(0)} ₪</div>` : ''}
                         ${record.paymentDate ? `<div><strong>📅 תאריך תשלום:</strong> ${record.paymentDate}</div>` : ''}
-                        ${record.paymentAmount ? `<div><strong>✅ סכום התקבל:</strong> ${record.paymentAmount.toFixed(2)} ₪</div>` : ''}
+                        ${record.paymentAmount ? `<div><strong>✅ סכום התקבל:</strong> ${record.paymentAmount.toFixed(0)} ₪</div>` : ''}
                     </div>
                     ${record.notes ? `<div style="margin-top: 10px;"><strong>📝 הערות:</strong> ${record.notes}</div>` : ''}
                     <button onclick="deletePaymentRecord(${projectId}, ${index})" style="margin-top: 10px; padding: 5px 15px; background: #ff4444; color: white; border: none; border-radius: 5px; cursor: pointer;">🗑️ מחק</button>
@@ -2103,7 +2122,7 @@
             });
 
             const balance = totalInvoiced - totalReceived;
-            document.getElementById(`balanceDue-${projectId}`).textContent = balance.toFixed(2) + ' ₪';
+            document.getElementById(`balanceDue-${projectId}`).textContent = balance.toFixed(0) + ' ₪';
         }
 
         function printProject(projectId) {
@@ -2304,6 +2323,7 @@
                 sDisc += (e.discountAmt || 0); sAfter += cad; sTotal += tot;
                 rows += '<tr>' +
                     '<td style="text-align:center"><span style="background:#667eea;color:#fff;width:26px;height:26px;border-radius:50%;display:inline-block;line-height:26px;font-weight:700;font-size:0.85em">' + (i+1) + '</span></td>' +
+                    '<td style="font-size:0.85em;color:#888">' + (e.dateAdded || '-') + '</td>' +
                     '<td>' + e.startDate + '</td><td>' + e.endDate + '</td>' +
                     '<td>' + rN(e.workDays,0) + '</td><td>' + rN(e.totalHours,0) + '</td>' +
                     '<td>' + e.topic + '</td><td>' + e.component + '</td>' +
@@ -2317,7 +2337,7 @@
             });
             // Totals row
             rows += '<tr style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-weight:800">' +
-                '<td colspan="3" style="color:#fff;border-color:rgba(255,255,255,0.3)">סה&quot;כ</td>' +
+                '<td colspan="4" style="color:#fff;border-color:rgba(255,255,255,0.3)">סה&quot;כ</td>' +
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sDays,0) + '</td>' +
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sHours,0) + '</td>' +
                 '<td colspan="4" style="color:#fff;border-color:rgba(255,255,255,0.3)"></td>' +
@@ -2386,7 +2406,7 @@
             // Data table
             h += '<div class="sec" style="overflow-x:auto"><h2>\u{1F4CB} טבלת נתונים — ' + entries.length + ' רשומות</h2>';
             h += '<table><thead><tr>';
-            h += '<th>#</th><th>התחלה</th><th>סיום</th><th>ימים</th><th>שעות</th>';
+            h += '<th>#</th><th>נוסף</th><th>התחלה</th><th>סיום</th><th>ימים</th><th>שעות</th>';
             h += '<th>נושא</th><th>מרכיב</th><th>משאבים</th><th>הערות</th>';
             h += '<th>עלות משאבים</th><th>חיוב עבודה</th><th>הנחה</th>';
             h += '<th>אחרי הנחה</th><th>סה"כ רשומה</th>';
@@ -2578,8 +2598,8 @@
             
             document.getElementById(`plannedTotalDays-${projectId}`).textContent = days;
             document.getElementById(`plannedTotalHours-${projectId}`).textContent = totalHours.toFixed(1);
-            document.getElementById(`plannedResourceCost-${projectId}`).textContent = resourceCost.toFixed(2);
-            document.getElementById(`plannedTotalCost-${projectId}`).textContent = totalCost.toFixed(2);
+            document.getElementById(`plannedResourceCost-${projectId}`).textContent = resourceCost.toFixed(0);
+            document.getElementById(`plannedTotalCost-${projectId}`).textContent = totalCost.toFixed(0);
             
             updateInvestmentSummary(projectId);
         }
@@ -2595,9 +2615,9 @@
             const newInvEl = document.getElementById(`newInvestmentForecast-${projectId}`);
             const totalInvEl = document.getElementById(`totalProjectInvestment-${projectId}`);
             
-            if (prevInvEl) prevInvEl.textContent = previousAmount.toFixed(2);
-            if (newInvEl) newInvEl.textContent = newInvestment.toFixed(2);
-            if (totalInvEl) totalInvEl.textContent = totalInvestment.toFixed(2);
+            if (prevInvEl) prevInvEl.textContent = previousAmount.toFixed(0);
+            if (newInvEl) newInvEl.textContent = newInvestment.toFixed(0);
+            if (totalInvEl) totalInvEl.textContent = totalInvestment.toFixed(0);
             
             updateRevenueCalculations(projectId);
         }
@@ -2770,19 +2790,19 @@
             document.getElementById(`costPerTreatment-${projectId}`).textContent = costPerTreatmentIls.toFixed(4);
             document.getElementById(`costPerSearch-${projectId}`).textContent = costPerSearchIls.toFixed(4);
             document.getElementById(`dailyTotalTokens-${projectId}`).textContent = dailyTotalTokens.toLocaleString();
-            document.getElementById(`dailyTokenCost-${projectId}`).textContent = dailyTokenCost.toFixed(2);
-            document.getElementById(`monthlyTokenCost-${projectId}`).textContent = monthlyTokenCost.toFixed(2);
+            document.getElementById(`dailyTokenCost-${projectId}`).textContent = dailyTokenCost.toFixed(0);
+            document.getElementById(`monthlyTokenCost-${projectId}`).textContent = monthlyTokenCost.toFixed(0);
 
             // Update the token cost input in maintenance section
             const tokenCostInput = document.getElementById(`tokenCost-${projectId}`);
             if (tokenCostInput) {
-                tokenCostInput.value = monthlyTokenCost.toFixed(2);
+                tokenCostInput.value = monthlyTokenCost.toFixed(0);
             }
 
             // Update ROI input
             const avgTokenCostInput = document.getElementById(`avgTokenCostInput-${projectId}`);
             if (avgTokenCostInput) {
-                avgTokenCostInput.value = monthlyTokenCost.toFixed(2);
+                avgTokenCostInput.value = monthlyTokenCost.toFixed(0);
             }
 
             calculateTokenRecommendation(projectId);
@@ -2810,8 +2830,8 @@
             if (entries.length === 0) {
                 md += `אין רשומות עדיין.\n\n`;
             } else {
-                md += `| # | תאריך התחלה | תאריך סיום | ימים | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | חיוב עבודה | הנחה | אחרי הנחה | סה"כ רשומה |\n`;
-                md += `|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
+                md += `| # | נוסף | תאריך התחלה | תאריך סיום | ימים | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | חיוב עבודה | הנחה | אחרי הנחה | סה"כ רשומה |\n`;
+                md += `|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
                 let mdDays=0, mdHours=0, mdRes=0, mdGross=0, mdAfter=0, mdTotal=0;
                 entries.forEach((e, i) => {
                     const dp = e.discountPct || 0;
@@ -2820,9 +2840,9 @@
                     mdDays += e.workDays; mdHours += e.totalHours;
                     mdRes += e.resourceCost; mdGross += e.grossCharge;
                     mdAfter += cad; mdTotal += tot;
-                    md += `| ${i+1} | ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(2)} | ${e.grossCharge.toFixed(2)} | ${dp > 0 ? dp+'%' : '-'} | ${cad.toFixed(2)} | **${tot.toFixed(2)}** |\n`;
+                    md += `| ${i+1} | ${e.dateAdded || '-'} | ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(0)} | ${e.grossCharge.toFixed(0)} | ${dp > 0 ? dp+'%' : '-'} | ${cad.toFixed(0)} | **${tot.toFixed(0)}** |\n`;
                 });
-                md += `| | | **סה"כ** | **${mdDays}** | **${mdHours}** | | | | | **${mdRes.toFixed(2)}** | **${mdGross.toFixed(2)}** | | **${mdAfter.toFixed(2)}** | **${mdTotal.toFixed(2)}** |\n`;
+                md += `| | | | **סה"כ** | **${mdDays}** | **${mdHours}** | | | | | **${mdRes.toFixed(0)}** | **${mdGross.toFixed(0)}** | | **${mdAfter.toFixed(0)}** | **${mdTotal.toFixed(0)}** |\n`;
                 md += `\n`;
             }
 
@@ -3022,15 +3042,15 @@
             // Update display
             document.getElementById(`recommendedMonthlyTokens-${projectId}`).textContent = recommendedMonthlyTokens.toLocaleString();
             document.getElementById(`recommendedTreatments-${projectId}`).textContent = recommendedTreatments;
-            document.getElementById(`profitPerSubscriber-${projectId}`).textContent = profitPerSubscriber.toFixed(2);
+            document.getElementById(`profitPerSubscriber-${projectId}`).textContent = profitPerSubscriber.toFixed(0);
             document.getElementById(`profitMargin-${projectId}`).textContent = profitMargin.toFixed(1) + '%';
 
             // Generate AI recommendation text
             const treatmentsPerDay = Math.ceil(recommendedTreatments / monthlyWorkDays);
             let recommendation = `💡 <strong>המלצה:</strong><br>`;
-            recommendation += `במחיר מנוי של $${subscriptionPriceUsd} (${subscriptionPriceIls.toFixed(2)} ₪), מומלץ להגביל כל מטפל ל-<strong>${recommendedMonthlyTokens.toLocaleString()} טוקנים לחודש</strong>.<br>`;
+            recommendation += `במחיר מנוי של $${subscriptionPriceUsd} (${subscriptionPriceIls.toFixed(0)} ₪), מומלץ להגביל כל מטפל ל-<strong>${recommendedMonthlyTokens.toLocaleString()} טוקנים לחודש</strong>.<br>`;
             recommendation += `זה מאפשר כ-<strong>${recommendedTreatments} טיפולים לחודש</strong> (כ-${treatmentsPerDay} טיפולים ליום עבודה).<br>`;
-            recommendation += `רווח נטו: <strong>${profitPerSubscriber.toFixed(2)} ₪</strong> למטפל (${profitMargin.toFixed(1)}% רווחיות).`;
+            recommendation += `רווח נטו: <strong>${profitPerSubscriber.toFixed(0)} ₪</strong> למטפל (${profitMargin.toFixed(1)}% רווחיות).`;
             
             if (profitMargin < 20) {
                 recommendation += `<br>⚠️ <strong>אזהרה:</strong> שולי רווח נמוכים - שקול להעלות מחיר או להפחית טוקנים.`;
@@ -3050,10 +3070,10 @@
             const totalCosts = fixedCosts + tokenCosts;
             const netProfit = revenue - totalCosts;
 
-            document.getElementById(`roiTotalRevenue-${projectId}`).textContent = revenue.toFixed(2) + ' ₪';
-            document.getElementById(`roiFixedCosts-${projectId}`).textContent = fixedCosts.toFixed(2) + ' ₪';
-            document.getElementById(`roiTokenCosts-${projectId}`).textContent = tokenCosts.toFixed(2) + ' ₪';
-            document.getElementById(`roiNetProfit-${projectId}`).textContent = netProfit.toFixed(2) + ' ₪';
+            document.getElementById(`roiTotalRevenue-${projectId}`).textContent = revenue.toFixed(0) + ' ₪';
+            document.getElementById(`roiFixedCosts-${projectId}`).textContent = fixedCosts.toFixed(0) + ' ₪';
+            document.getElementById(`roiTokenCosts-${projectId}`).textContent = tokenCosts.toFixed(0) + ' ₪';
+            document.getElementById(`roiNetProfit-${projectId}`).textContent = netProfit.toFixed(0) + ' ₪';
 
             // Calculate payback period
             const totalInvestmentEl = document.getElementById(`totalProjectInvestment-${projectId}`);
@@ -3095,7 +3115,7 @@
             
             const totalCostEl = document.getElementById(`totalMonthlyCosts-${projectId}`);
             if (totalCostEl) {
-                totalCostEl.textContent = totalMonthlyCosts.toFixed(2);
+                totalCostEl.textContent = totalMonthlyCosts.toFixed(0);
             }
             
             updateRevenueCalculations(projectId);
@@ -3110,7 +3130,7 @@
             
             const totalRevenueEl = document.getElementById(`totalMonthlyRevenue-${projectId}`);
             if (totalRevenueEl) {
-                totalRevenueEl.textContent = totalRevenue.toFixed(2);
+                totalRevenueEl.textContent = totalRevenue.toFixed(0);
             }
             
             // Final profit/loss calculations
@@ -3124,10 +3144,10 @@
             const profitLossEl = document.getElementById(`monthlyProfitLoss-${projectId}`);
             const profitLossLabel = document.getElementById(`profitLossLabel-${projectId}`);
             
-            if (finalRevenueEl) finalRevenueEl.textContent = totalRevenue.toFixed(2) + ' ₪';
-            if (finalCostsEl) finalCostsEl.textContent = totalCosts.toFixed(2) + ' ₪';
+            if (finalRevenueEl) finalRevenueEl.textContent = totalRevenue.toFixed(0) + ' ₪';
+            if (finalCostsEl) finalCostsEl.textContent = totalCosts.toFixed(0) + ' ₪';
             if (profitLossEl) {
-                profitLossEl.textContent = profitLoss.toFixed(2) + ' ₪';
+                profitLossEl.textContent = profitLoss.toFixed(0) + ' ₪';
                 profitLossEl.style.color = profitLoss >= 0 ? '#4CAF50' : '#ff4444';
             }
             if (profitLossLabel) {
