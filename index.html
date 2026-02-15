@@ -569,7 +569,8 @@
             .add-resource-form button, .resource-item button,
             #reportHistoryTable .delete-btn,
             input[type="checkbox"],
-            .remove-tab {
+            .remove-tab,
+            .paid-resources-box {
                 display: none !important;
             }
 
@@ -689,37 +690,39 @@
                 line-height: 1.3 !important;
             }
 
-            /* Column widths for data tables in print */
+            /* Column widths for data tables in print (17 cols including hidden delete) */
             table[id^="dataTable"] th:nth-child(1),
             table[id^="dataTable"] td:nth-child(1) { width: 3%; }  /* # */
             table[id^="dataTable"] th:nth-child(2),
-            table[id^="dataTable"] td:nth-child(2) { width: 7%; }  /* תאריך הוספה */
+            table[id^="dataTable"] td:nth-child(2) { width: 6%; }  /* תאריך הוספה */
             table[id^="dataTable"] th:nth-child(3),
-            table[id^="dataTable"] td:nth-child(3) { width: 6%; }  /* תאריך התחלה */
+            table[id^="dataTable"] td:nth-child(3) { width: 5%; }  /* תאריך התחלה */
             table[id^="dataTable"] th:nth-child(4),
-            table[id^="dataTable"] td:nth-child(4) { width: 6%; }  /* תאריך סיום */
+            table[id^="dataTable"] td:nth-child(4) { width: 5%; }  /* תאריך סיום */
             table[id^="dataTable"] th:nth-child(5),
             table[id^="dataTable"] td:nth-child(5) { width: 4%; }  /* ימי עבודה */
             table[id^="dataTable"] th:nth-child(6),
-            table[id^="dataTable"] td:nth-child(6) { width: 5%; }  /* שעות */
+            table[id^="dataTable"] td:nth-child(6) { width: 4%; }  /* שעות */
             table[id^="dataTable"] th:nth-child(7),
-            table[id^="dataTable"] td:nth-child(7) { width: 10%; } /* נושא */
+            table[id^="dataTable"] td:nth-child(7) { width: 9%; }  /* נושא */
             table[id^="dataTable"] th:nth-child(8),
-            table[id^="dataTable"] td:nth-child(8) { width: 10%; } /* מרכיב */
+            table[id^="dataTable"] td:nth-child(8) { width: 9%; }  /* מרכיב */
             table[id^="dataTable"] th:nth-child(9),
-            table[id^="dataTable"] td:nth-child(9) { width: 8%; }  /* משאבים */
+            table[id^="dataTable"] td:nth-child(9) { width: 7%; }  /* משאבים */
             table[id^="dataTable"] th:nth-child(10),
-            table[id^="dataTable"] td:nth-child(10) { width: 10%; } /* הערות */
+            table[id^="dataTable"] td:nth-child(10) { width: 8%; }  /* הערות */
             table[id^="dataTable"] th:nth-child(11),
             table[id^="dataTable"] td:nth-child(11) { width: 6%; }  /* עלות משאבים */
             table[id^="dataTable"] th:nth-child(12),
-            table[id^="dataTable"] td:nth-child(12) { width: 6%; }  /* חיוב עבודה */
+            table[id^="dataTable"] td:nth-child(12) { width: 5%; }  /* משאבים ששולמו */
             table[id^="dataTable"] th:nth-child(13),
-            table[id^="dataTable"] td:nth-child(13) { width: 4%; }  /* הנחה */
+            table[id^="dataTable"] td:nth-child(13) { width: 6%; }  /* חיוב עבודה */
             table[id^="dataTable"] th:nth-child(14),
-            table[id^="dataTable"] td:nth-child(14) { width: 6%; }  /* חיוב אחרי הנחה */
+            table[id^="dataTable"] td:nth-child(14) { width: 4%; }  /* הנחה */
             table[id^="dataTable"] th:nth-child(15),
-            table[id^="dataTable"] td:nth-child(15) { width: 7%; }  /* סה"כ רשומה */
+            table[id^="dataTable"] td:nth-child(15) { width: 6%; }  /* חיוב אחרי הנחה */
+            table[id^="dataTable"] th:nth-child(16),
+            table[id^="dataTable"] td:nth-child(16) { width: 7%; }  /* סה"כ רשומה */
             /* Hide delete column in print */
             table th:last-child,
             table td:last-child {
@@ -1292,6 +1295,34 @@
             font-weight: 800;
             font-size: 1.1em;
         }
+        /* Paid Resources Section */
+        .paid-resources-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 15px 0;
+        }
+        .paid-resources-box h4 { color: #2e7d32; margin-bottom: 12px; font-size: 1.1em; }
+        .paid-resources-inputs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .paid-resources-inputs .input-field {
+            flex: 1;
+            min-width: 160px;
+        }
+        .paid-resources-inputs label {
+            color: #2e7d32;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+        .paid-resources-inputs input {
+            border: 2px solid #4CAF50 !important;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -1328,7 +1359,7 @@
 
             <!-- Entry Form -->
             <div class="section">
-                <h2 class="section-title">✏️ הוספת רשומה חדשה</h2>
+                <h2 class="section-title">✏️ הוספת רשומה חדשה — אבשי ספיר, מפתח מתחיל</h2>
                 <div class="input-group">
                     <div class="input-field">
                         <label>תאריך התחלה:</label>
@@ -1351,7 +1382,7 @@
                         <input type="number" id="hours-0" value="10" min="0" step="0.5">
                     </div>
                     <div class="input-field">
-                        <label>חיוב שעתי (₪):</label>
+                        <label>חיוב שעתי למפתח עם ניסיון (₪):</label>
                         <input type="number" id="hourlyRate-0" value="0" min="0" step="1">
                     </div>
                     <div class="input-field">
@@ -1362,8 +1393,26 @@
                 </div>
                 
                 <div class="input-field">
-                    <label>בחר משאבים ששימשו:</label>
+                    <label>בחר משאבים שאבשי ספיר המפתח השתמש ושילם באמצעות כרטיס האשראי הפרטי:</label>
                     <div class="resource-select" id="resourceSelect-0"></div>
+                </div>
+
+                <!-- Paid Resources Section - PROJECT LEVEL (saves immediately) -->
+                <div class="paid-resources-box" id="paidResourcesBox-0">
+                    <h4>💳 משאבים ששולמו — סכום ששולם ע"י היזם רוני ספיר</h4>
+                    <div class="paid-resources-inputs">
+                        <div class="input-field">
+                            <label>סכום ששולם (₪):</label>
+                            <input type="number" id="paidResourcesAmount-0" value="0" min="0" step="0.01" placeholder="סכום ששולם"
+                                oninput="savePaidResources(0)">
+                        </div>
+                        <div class="input-field">
+                            <label>תאריך תשלום:</label>
+                            <input type="date" id="paidResourcesDate-0"
+                                onchange="savePaidResources(0)">
+                        </div>
+                    </div>
+                    <div id="paidResourcesStatus-0" style="text-align:center; margin-top:8px; font-size:0.85em; color:#2e7d32; font-weight:600;"></div>
                 </div>
 
                 <div class="input-field">
@@ -1384,7 +1433,7 @@
                             <div class="calc-value" id="prevHours-0">0</div>
                         </div>
                         <div class="calc-cell">
-                            <div class="calc-label">💵 חיוב שעתי</div>
+                            <div class="calc-label">💵 חיוב שעתי למפתח עם ניסיון</div>
                             <div class="calc-value" id="prevRate-0">0 ₪</div>
                         </div>
                         <div class="calc-cell">
@@ -1417,9 +1466,28 @@
                             <div style="color:#999; padding: 10px; text-align:center;">לא נבחרו משאבים</div>
                         </div>
                     </div>
+
+                    <!-- Paid Resources Preview -->
+                    <div class="discount-row" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-color: #4CAF50;">
+                        <label style="color: #2e7d32;">💳 משאבים ששולמו:</label>
+                        <div class="discount-result">
+                            <div class="discount-chip" style="border-color: #4CAF50;">
+                                <div class="dc-label" style="color: #2e7d32;">💳 סכום ששולם</div>
+                                <div class="dc-value" style="color: #2e7d32;" id="prevPaidResources-0">0 ₪</div>
+                            </div>
+                            <div class="discount-chip" style="border-color: #4CAF50;">
+                                <div class="dc-label" style="color: #2e7d32;">📅 תאריך תשלום</div>
+                                <div class="dc-value" style="color: #2e7d32;" id="prevPaidDate-0">-</div>
+                            </div>
+                            <div class="discount-chip after-discount">
+                                <div class="dc-label">⚙️ עלות משאבים נטו</div>
+                                <div class="dc-value" id="prevNetResourceCost-0">0 ₪</div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="calc-total-row">
-                        סה"כ לרשומה (אחרי הנחה + משאבים): <span id="prevTotal-0">0</span> ₪
+                        סה"כ לרשומה (עבודה + משאבים - ששולמו): <span id="prevTotal-0">0</span> ₪
                     </div>
                 </div>
 
@@ -1461,6 +1529,7 @@
                                 <th>משאבים</th>
                                 <th>הערות</th>
                                 <th>עלות משאבים (₪)</th>
+                                <th style="background: #2e7d32 !important; color: white;">משאבים ששולמו (₪)</th>
                                 <th>חיוב עבודה (₪)</th>
                                 <th>הנחה %</th>
                                 <th>חיוב אחרי הנחה (₪)</th>
@@ -1489,8 +1558,13 @@
                         <div class="summary-value" id="totalResourceCost-0">0</div>
                         <div class="summary-label">₪</div>
                     </div>
+                    <div class="summary-card" style="border: 2px solid #4CAF50;">
+                        <h3>💳 סה"כ משאבים ששולמו</h3>
+                        <div class="summary-value" style="color: #2e7d32;" id="totalPaidResources-0">0</div>
+                        <div class="summary-label">₪</div>
+                    </div>
                     <div class="summary-card">
-                        <h3>💰 סה"כ הכנסה גולמית</h3>
+                        <h3>💰 סה"כ לתשלום</h3>
                         <div class="summary-value" id="totalIncome-0">0</div>
                         <div class="summary-label">₪</div>
                     </div>
@@ -1519,6 +1593,10 @@
                         <div class="grand-total-cell">
                             <div class="gt-label">⚙️ עלות משאבים</div>
                             <div class="gt-value" id="gtResourceCost-0">0 ₪</div>
+                        </div>
+                        <div class="grand-total-cell" style="background: rgba(76,175,80,0.3);">
+                            <div class="gt-label">💳 משאבים ששולמו</div>
+                            <div class="gt-value" id="gtPaidResources-0">0 ₪</div>
                         </div>
                     </div>
                     <div class="grand-total-final">
@@ -1559,7 +1637,7 @@
                         <input type="number" id="plannedHoursPerDay-0" value="10" min="0" step="0.5" onchange="updatePlanningCalculations(0)">
                     </div>
                     <div class="input-field">
-                        <label>חיוב שעתי (₪):</label>
+                        <label>חיוב שעתי למפתח עם ניסיון (₪):</label>
                         <input type="number" id="plannedHourlyRate-0" value="0" min="0" step="1" onchange="updatePlanningCalculations(0)">
                     </div>
                 </div>
@@ -1897,7 +1975,7 @@
                 <h2>💰 סיכום פיננסי סופי</h2>
                 <div class="financial-grid">
                     <div class="financial-item">
-                        <div class="label">הכנסה ברוטו</div>
+                        <div class="label">סכום לחיוב לפי תעריף מפתח עצמאי עם נסיון</div>
                         <div class="value" id="grossIncome-0">0 ₪</div>
                     </div>
                     <div class="financial-item">
@@ -1905,7 +1983,7 @@
                         <div class="value" id="resourceCosts-0">0 ₪</div>
                     </div>
                     <div class="financial-item">
-                        <div class="label">💵 הכנסה נטו (רווח נקי)</div>
+                        <div class="label">💵 סכום לחיוב אחרי התאמות הנחת מפתח ללא נסיון והנחת לפי קצב ביצוע</div>
                         <div class="value net-profit" id="netProfit-0">0 ₪</div>
                     </div>
                     <div class="financial-item">
@@ -2002,6 +2080,26 @@
             renderReportHistory();
         };
 
+        // === Project-level Paid Resources ===
+        function savePaidResources(projectId) {
+            const amount = parseFloat(document.getElementById(`paidResourcesAmount-${projectId}`).value) || 0;
+            const date = document.getElementById(`paidResourcesDate-${projectId}`).value || '';
+            
+            projects[projectId].paidResourcesTotal = amount;
+            projects[projectId].paidResourcesDate = date;
+            
+            // Show confirmation
+            const statusEl = document.getElementById(`paidResourcesStatus-${projectId}`);
+            if (statusEl) {
+                statusEl.textContent = '✅ נשמר: ' + fmtNum(amount) + ' ₪' + (date ? ' | ' + date : '');
+                setTimeout(() => { statusEl.textContent = ''; }, 3000);
+            }
+            
+            updateSummary(projectId);
+            renderTable(projectId);
+            saveToLocalStorage();
+        }
+
         function initializeProject(projectId) {
             updateResourceList(projectId);
             updateResourceSelect(projectId);
@@ -2013,6 +2111,16 @@
             updatePlanningCalculations(projectId);
             updateMaintenanceCosts(projectId);
             updateRevenueCalculations(projectId);
+            
+            // Load project-level paid resources into form
+            const paidAmtEl = document.getElementById(`paidResourcesAmount-${projectId}`);
+            const paidDateEl = document.getElementById(`paidResourcesDate-${projectId}`);
+            if (paidAmtEl && projects[projectId].paidResourcesTotal) {
+                paidAmtEl.value = projects[projectId].paidResourcesTotal;
+            }
+            if (paidDateEl && projects[projectId].paidResourcesDate) {
+                paidDateEl.value = projects[projectId].paidResourcesDate;
+            }
         }
 
         function addNewProject() {
@@ -2231,6 +2339,12 @@
             
             const grandTotal = workAfterDiscount + resourceCost;
             
+            // Project-level paid resources
+            const paidAmount = projects[projectId].paidResourcesTotal || 0;
+            const paidDate = projects[projectId].paidResourcesDate || '-';
+            const netResourceCost = resourceCost - paidAmount;
+            const grandTotalNet = workAfterDiscount + netResourceCost;
+            
             // Sync discount to entry form
             const entryDiscount = document.getElementById(`discountEntry-${projectId}`);
             if (entryDiscount) entryDiscount.value = discountPct;
@@ -2241,7 +2355,10 @@
             document.getElementById(`prevWorkCost-${projectId}`).textContent = fmtNum(workCharge) + ' ₪';
             document.getElementById(`prevDiscountAmt-${projectId}`).textContent = fmtNum(discountAmt) + ' ₪';
             document.getElementById(`prevWorkAfterDiscount-${projectId}`).textContent = fmtNum(workAfterDiscount) + ' ₪';
-            document.getElementById(`prevTotal-${projectId}`).textContent = fmtNum(grandTotal);
+            document.getElementById(`prevPaidResources-${projectId}`).textContent = fmtNum(paidAmount) + ' ₪';
+            document.getElementById(`prevPaidDate-${projectId}`).textContent = paidDate || '-';
+            document.getElementById(`prevNetResourceCost-${projectId}`).textContent = fmtNum(netResourceCost) + ' ₪';
+            document.getElementById(`prevTotal-${projectId}`).textContent = fmtNum(grandTotalNet);
             
             preview.classList.add('visible');
         }
@@ -2296,7 +2413,7 @@
 
             projects[projectId].entries.push(entry);
             
-            // Clear form
+            // Clear form (but NOT the paid resources — those are project-level)
             document.getElementById(`startDate-${projectId}`).value = '';
             document.getElementById(`endDate-${projectId}`).value = '';
             document.getElementById(`topic-${projectId}`).value = '';
@@ -2328,6 +2445,9 @@
             const tbody = document.querySelector(`#dataTable-${projectId} tbody`);
             tbody.innerHTML = '';
 
+            const projectPaid = projects[projectId].paidResourcesTotal || 0;
+            const totalEntries = projects[projectId].entries.length;
+
             projects[projectId].entries.forEach((entry, index) => {
                 const dp = entry.discountPct || 0;
                 const da = entry.discountAmt || 0;
@@ -2346,6 +2466,7 @@
                     <td>${entry.resources.join(', ')}</td>
                     <td>${entry.notes || '-'}</td>
                     <td>${fmtNum(entry.resourceCost)}</td>
+                    <td style="background:#e8f5e9; color:#2e7d32; font-weight:700; text-align:center;">${index === 0 && projectPaid > 0 ? fmtNum(projectPaid) : '-'}</td>
                     <td>${fmtNum(entry.grossCharge)}</td>
                     <td>${dp > 0 ? dp + '%' : '-'}</td>
                     <td>${fmtNum(cad)}</td>
@@ -2370,18 +2491,23 @@
                 totalAfterDiscount += (entry.chargeAfterDiscount !== undefined ? entry.chargeAfterDiscount : entry.grossCharge);
             });
 
-            const grandTotal = totalAfterDiscount + totalResourceCost;
+            // Project-level paid resources (NOT per-entry)
+            const totalPaidResources = projects[projectId].paidResourcesTotal || 0;
+            const netResourceCost = totalResourceCost - totalPaidResources;
+            const grandTotal = totalAfterDiscount + netResourceCost;
             const totalDiscount = totalGrossIncome - totalAfterDiscount;
             const avgHourlyRate = totalHours > 0 ? totalAfterDiscount / totalHours : 0;
 
             document.getElementById(`totalDays-${projectId}`).textContent = fmtInt(totalDays);
             document.getElementById(`totalHours-${projectId}`).textContent = fmtInt(totalHours);
             document.getElementById(`totalResourceCost-${projectId}`).textContent = fmtNum(totalResourceCost);
+            const tpEl = document.getElementById(`totalPaidResources-${projectId}`);
+            if (tpEl) tpEl.textContent = fmtNum(totalPaidResources);
             document.getElementById(`totalIncome-${projectId}`).textContent = fmtNum(totalAfterDiscount);
             
             document.getElementById(`grossIncome-${projectId}`).textContent = fmtNum(totalGrossIncome) + ' ₪';
-            document.getElementById(`resourceCosts-${projectId}`).textContent = fmtNum(totalResourceCost) + ' ₪';
-            document.getElementById(`netProfit-${projectId}`).textContent = fmtNum(totalAfterDiscount - totalResourceCost) + ' ₪';
+            document.getElementById(`resourceCosts-${projectId}`).textContent = fmtNum(netResourceCost) + ' ₪';
+            document.getElementById(`netProfit-${projectId}`).textContent = fmtNum(totalAfterDiscount - netResourceCost) + ' ₪';
             document.getElementById(`avgHourlyRate-${projectId}`).textContent = fmtNum(avgHourlyRate) + ' ₪/שעה';
             
             // Update Grand Total box
@@ -2392,6 +2518,8 @@
                 document.getElementById(`gtHours-${projectId}`).textContent = fmtInt(totalHours);
                 document.getElementById(`gtWorkCharge-${projectId}`).textContent = fmtNum(totalAfterDiscount) + ' ₪';
                 document.getElementById(`gtResourceCost-${projectId}`).textContent = fmtNum(totalResourceCost) + ' ₪';
+                const gtPaidEl = document.getElementById(`gtPaidResources-${projectId}`);
+                if (gtPaidEl) gtPaidEl.textContent = fmtNum(totalPaidResources) + ' ₪';
                 document.getElementById(`gtGrandTotal-${projectId}`).textContent = fmtNum(grandTotal);
             }
 
@@ -2582,20 +2710,24 @@
             const gv = (id) => document.getElementById(id + '-' + projectId)?.textContent || '0';
             
             let sDays=0, sHours=0, sRes=0, sAfter=0, sTotal=0;
+            const sPaid = p.paidResourcesTotal || 0;
             entries.forEach(e => {
                 const cad = e.chargeAfterDiscount !== undefined ? e.chargeAfterDiscount : e.grossCharge;
                 sDays += e.workDays; sHours += e.totalHours;
                 sRes += e.resourceCost; sAfter += cad; sTotal += cad + e.resourceCost;
             });
+            const sNetTotal = sTotal - sPaid;
             
-            let msg = '*📊 דוח פרויקט: ' + pName + '*\n\n';
+            let msg = '*📊 דוח פרויקטים — אבשי ספיר — מפתח מתחיל, עוסק מורשה 052866969*\n';
+            msg += '*📋 ' + pName + '*\n\n';
             msg += '📋 *' + entries.length + ' רשומות*\n';
             msg += '📅 ימי עבודה: ' + fmtInt(sDays) + '\n';
             msg += '⏰ שעות: ' + fmtInt(sHours) + '\n';
             msg += '💰 חיוב עבודה: ' + fmtNum(sAfter) + ' ₪\n';
             msg += '⚙️ משאבים: ' + fmtNum(sRes) + ' ₪\n';
-            msg += '\n💎 *סה"כ כללי: ' + fmtNum(sTotal) + ' ₪*\n';
-            msg += '\n💵 הכנסה נטו: ' + gv('netProfit') + '\n';
+            msg += '💳 משאבים ששולמו: ' + fmtNum(sPaid) + ' ₪\n';
+            msg += '\n💎 *סה"כ כללי: ' + fmtNum(sNetTotal) + ' ₪*\n';
+            msg += '\n💵 סכום לחיוב אחרי התאמות: ' + gv('netProfit') + '\n';
             msg += '📈 שכר שעתי ממוצע: ' + gv('avgHourlyRate') + '\n';
             
             window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
@@ -2741,6 +2873,7 @@
             // Build table rows from data
             let rows = '';
             let sDays=0, sHours=0, sRes=0, sGross=0, sDisc=0, sAfter=0, sTotal=0;
+            const sPaid = p.paidResourcesTotal || 0;
             entries.forEach((e, i) => {
                 const dp = e.discountPct || 0;
                 const cad = e.chargeAfterDiscount !== undefined ? e.chargeAfterDiscount : e.grossCharge;
@@ -2757,11 +2890,13 @@
                     '<td>' + (e.resources||[]).join(', ') + '</td>' +
                     '<td>' + (e.notes||'-') + '</td>' +
                     '<td>' + rN(e.resourceCost) + '</td>' +
+                    '<td style="color:#2e7d32;font-weight:700;background:#e8f5e9">' + (i === 0 && sPaid > 0 ? rN(sPaid) : '-') + '</td>' +
                     '<td>' + rN(e.grossCharge) + '</td>' +
                     '<td>' + (dp > 0 ? dp+'%' : '-') + '</td>' +
                     '<td>' + rN(cad) + '</td>' +
                     '<td style="font-weight:800;background:#f0f7ff">' + rN(tot) + '</td></tr>';
             });
+            const sNetTotal = sTotal - sPaid;
             // Totals row
             rows += '<tr style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-weight:800">' +
                 '<td colspan="4" style="color:#fff;border-color:rgba(255,255,255,0.3)">סה&quot;כ</td>' +
@@ -2769,10 +2904,11 @@
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sHours,0) + '</td>' +
                 '<td colspan="4" style="color:#fff;border-color:rgba(255,255,255,0.3)"></td>' +
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sRes) + '</td>' +
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sPaid) + '</td>' +
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sGross) + '</td>' +
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sDisc) + '</td>' +
                 '<td style="color:#fff;border-color:rgba(255,255,255,0.3)">' + rN(sAfter) + '</td>' +
-                '<td style="color:#fff;border-color:rgba(255,255,255,0.3);font-size:1.1em">' + rN(sTotal) + '</td></tr>';
+                '<td style="color:#fff;border-color:rgba(255,255,255,0.3);font-size:1.1em">' + rN(sNetTotal) + '</td></tr>';
 
             // Resources list
             let resList = '';
@@ -2787,7 +2923,7 @@
             h += '<!DOCTYPE html><html lang="he" dir="rtl"><head>';
             h += '<meta charset="UTF-8">';
             h += '<meta name="viewport" content="width=device-width,initial-scale=1.0">';
-            h += '<title>דוח פרויקט: ' + pName + '</title>';
+            h += '<title>דוח פרויקטים — אבשי ספיר — ' + pName + '</title>';
             h += '<style>';
             h += '*{margin:0;padding:0;box-sizing:border-box}';
             h += 'body{font-family:Segoe UI,Tahoma,Arial,sans-serif;background:#f0f2f5;padding:20px;direction:rtl;color:#333}';
@@ -2821,8 +2957,8 @@
             h += '<div class="ctr">';
 
             // Header
-            h += '<div class="hdr"><h1>\u{1F4CA} דוח פרויקט: ' + pName + '</h1>';
-            h += '<p>תאריך הפקה: ' + dateStr + '</p></div>';
+            h += '<div class="hdr"><h1>\u{1F4CA} דוח פרויקטים — אבשי ספיר — מפתח מתחיל, עוסק מורשה 052866969</h1>';
+            h += '<p>' + pName + ' | תאריך הפקה: ' + dateStr + '</p></div>';
             h += '<div class="cnt">';
 
             // Resources section
@@ -2835,7 +2971,7 @@
             h += '<table><thead><tr>';
             h += '<th>#</th><th>נוסף</th><th>התחלה</th><th>סיום</th><th>ימים</th><th>שעות</th>';
             h += '<th>נושא</th><th>מרכיב</th><th>משאבים</th><th>הערות</th>';
-            h += '<th>עלות משאבים</th><th>חיוב עבודה</th><th>הנחה</th>';
+            h += '<th>עלות משאבים</th><th>ששולמו</th><th>חיוב עבודה</th><th>הנחה</th>';
             h += '<th>אחרי הנחה</th><th>סה"כ רשומה</th>';
             h += '</tr></thead><tbody>' + rows + '</tbody></table></div>';
 
@@ -2844,7 +2980,8 @@
             h += '<div class="sc"><h3>\u{1F4C5} ימי עבודה</h3><div class="v">' + gv('totalDays') + '</div><div class="l">ימים</div></div>';
             h += '<div class="sc"><h3>\u23F0 שעות עבודה</h3><div class="v">' + gv('totalHours') + '</div><div class="l">שעות</div></div>';
             h += '<div class="sc"><h3>\u{1F4B8} עלות משאבים</h3><div class="v">' + gv('totalResourceCost') + '</div><div class="l">\u20AA</div></div>';
-            h += '<div class="sc"><h3>\u{1F4B0} הכנסה</h3><div class="v">' + gv('totalIncome') + '</div><div class="l">\u20AA</div></div>';
+            h += '<div class="sc" style="border:2px solid #4CAF50"><h3>\u{1F4B3} משאבים ששולמו</h3><div class="v" style="color:#2e7d32">' + gv('totalPaidResources') + '</div><div class="l">\u20AA</div></div>';
+            h += '<div class="sc"><h3>\u{1F4B0} לתשלום</h3><div class="v">' + gv('totalIncome') + '</div><div class="l">\u20AA</div></div>';
             h += '</div></div>';
 
             // Grand total
@@ -2858,9 +2995,9 @@
 
             // Financial
             h += '<div class="fn"><h2>\u{1F4B0} סיכום פיננסי</h2><div class="fg">';
-            h += '<div class="fi"><div class="fl">הכנסה ברוטו</div><div class="fv">' + gv('grossIncome') + '</div></div>';
+            h += '<div class="fi"><div class="fl">סכום לחיוב לפי תעריף מפתח עצמאי עם נסיון</div><div class="fv">' + gv('grossIncome') + '</div></div>';
             h += '<div class="fi"><div class="fl">עלויות משאבים</div><div class="fv">' + gv('resourceCosts') + '</div></div>';
-            h += '<div class="fi"><div class="fl">\u{1F4B5} הכנסה נטו</div><div class="fv">' + gv('netProfit') + '</div></div>';
+            h += '<div class="fi"><div class="fl">\u{1F4B5} סכום לחיוב אחרי התאמות</div><div class="fv">' + gv('netProfit') + '</div></div>';
             h += '<div class="fi"><div class="fl">שכר שעתי ממוצע</div><div class="fv">' + gv('avgHourlyRate') + '</div></div>';
             h += '</div></div>';
 
@@ -3257,9 +3394,10 @@
             if (entries.length === 0) {
                 md += `אין רשומות עדיין.\n\n`;
             } else {
-                md += `| # | נוסף | תאריך התחלה | תאריך סיום | ימים | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | חיוב עבודה | הנחה | אחרי הנחה | סה"כ רשומה |\n`;
-                md += `|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
+                md += `| # | נוסף | תאריך התחלה | תאריך סיום | ימים | שעות | נושא | מרכיב | משאבים | הערות | עלות משאבים | ששולמו | חיוב עבודה | הנחה | אחרי הנחה | סה"כ רשומה |\n`;
+                md += `|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
                 let mdDays=0, mdHours=0, mdRes=0, mdGross=0, mdAfter=0, mdTotal=0;
+                const mdPaid = projects[projectId].paidResourcesTotal || 0;
                 entries.forEach((e, i) => {
                     const dp = e.discountPct || 0;
                     const cad = e.chargeAfterDiscount !== undefined ? e.chargeAfterDiscount : e.grossCharge;
@@ -3267,9 +3405,10 @@
                     mdDays += e.workDays; mdHours += e.totalHours;
                     mdRes += e.resourceCost; mdGross += e.grossCharge;
                     mdAfter += cad; mdTotal += tot;
-                    md += `| ${i+1} | ${e.dateAdded || '-'} | ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(0)} | ${e.grossCharge.toFixed(0)} | ${dp > 0 ? dp+'%' : '-'} | ${cad.toFixed(0)} | **${tot.toFixed(0)}** |\n`;
+                    md += `| ${i+1} | ${e.dateAdded || '-'} | ${e.startDate} | ${e.endDate} | ${e.workDays} | ${e.totalHours} | ${e.topic} | ${e.component} | ${(e.resources||[]).join(', ')} | ${e.notes || '-'} | ${e.resourceCost.toFixed(0)} | ${i === 0 && mdPaid > 0 ? mdPaid.toFixed(0) : '-'} | ${e.grossCharge.toFixed(0)} | ${dp > 0 ? dp+'%' : '-'} | ${cad.toFixed(0)} | **${tot.toFixed(0)}** |\n`;
                 });
-                md += `| | | | **סה"כ** | **${mdDays}** | **${mdHours}** | | | | | **${mdRes.toFixed(0)}** | **${mdGross.toFixed(0)}** | | **${mdAfter.toFixed(0)}** | **${mdTotal.toFixed(0)}** |\n`;
+                const mdNetTotal = mdTotal - mdPaid;
+                md += `| | | | **סה"כ** | **${mdDays}** | **${mdHours}** | | | | | **${mdRes.toFixed(0)}** | **${mdPaid.toFixed(0)}** | **${mdGross.toFixed(0)}** | | **${mdAfter.toFixed(0)}** | **${mdNetTotal.toFixed(0)}** |\n`;
                 md += `\n`;
             }
 
@@ -3279,7 +3418,8 @@
             md += `- **סה"כ ימי עבודה:** ${getVal('totalDays')} ימים\n`;
             md += `- **סה"כ שעות עבודה:** ${getVal('totalHours')} שעות\n`;
             md += `- **סה"כ עלות משאבים:** ${getVal('totalResourceCost')} ₪\n`;
-            md += `- **סה"כ הכנסה (אחרי הנחה):** ${getVal('totalIncome')} ₪\n`;
+            md += `- **סה"כ משאבים ששולמו:** ${getVal('totalPaidResources')} ₪\n`;
+            md += `- **סה"כ לתשלום:** ${getVal('totalIncome')} ₪\n`;
             md += `- **סה"כ כללי:** ${getVal('gtGrandTotal')} ₪\n\n`;
 
             // --- Token costs ---
@@ -3332,9 +3472,9 @@
 
             // --- Financial summary ---
             md += `## 💰 סיכום פיננסי\n\n`;
-            md += `- **הכנסה ברוטו:** ${getVal('grossIncome')}\n`;
+            md += `- **סכום לחיוב לפי תעריף מפתח עצמאי עם נסיון:** ${getVal('grossIncome')}\n`;
             md += `- **עלויות משאבים:** ${getVal('resourceCosts')}\n`;
-            md += `- **הכנסה נטו:** ${getVal('netProfit')}\n`;
+            md += `- **סכום לחיוב אחרי התאמות:** ${getVal('netProfit')}\n`;
             md += `- **שכר שעתי ממוצע נטו:** ${getVal('avgHourlyRate')}\n`;
             md += `- **יתרה לתשלום:** ${getVal('balanceDue')}\n\n`;
 
